@@ -192,6 +192,7 @@ a{
   margin: 0;
 }
 #container{
+  background-color: #fdfdf0;
   width: 100%;
   height: 100vh;
 }

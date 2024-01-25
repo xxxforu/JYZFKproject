@@ -192,8 +192,9 @@ a{
   margin: 0;
 }
 #container{
+  background-color: #edebde;
   width: 100%;
-  height: 100vh;
+  height: 100%;
 }
 #exitLogin{
   color: #fff !important;

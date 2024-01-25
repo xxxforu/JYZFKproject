@@ -159,7 +159,7 @@ const handleClose = (key, keyPath) => {
   padding-top: 10vh;
   text-decoration: none;
 }
-#exitLogin .el-button > span{
+.el-button > span{
   color: #fff;
 }
 .el-menu-item{
@@ -193,7 +193,7 @@ a{
 }
 #container{
   width: 100%;
-  height: 100vh;
+  height: 100%;
 }
 #exitLogin{
   color: #fff !important;

@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  
+  <!-- <router-link to="/main">登录</router-link> -->
   <div class="container">
     <div class="loginBox">
       
@@ -12,15 +12,11 @@
         <div class="inputbox">
           <label >您是：</label>
           <div class="radiobox">
-            <div>
-              <input type="radio" id="manager" name="Worktype" checked>
-              <label for="manager">管理员</label>
-            </div>
-            
-            <div>
+            <input type="radio" id="manager" name="Worktype">
+            <label for="manager">管理员</label>
+            <br>
             <input  type="radio" id="gasWorker" name="Worktype" >
             <label for="gasWorker">加油站人员</label>
-            </div>
           </div>
         </div>
         <div class="inputbox">
@@ -29,9 +25,9 @@
         </div>
         <div class="inputbox">
           <label for="password">密码：</label>
-          <input id="passeword" required type="password" name="password"  placeholder="请输入密码">
-        </div><router-link to="/main">
-        <button type="submit">登录</button></router-link>
+          <input id="passeword" required type="password" name="password" >
+        </div>
+        <button type="submit">登录</button>
       </form>
     </div>
     <div class="image">
@@ -51,9 +47,6 @@ input {
   border-radius: 10px;
   accent-color: #9f2f2e;
 }
-h2{
-  margin-bottom: 40px;
-}
 .loginBox{
   position: relative;
   flex: 1;
@@ -69,33 +62,22 @@ h2{
   transform: translate(-50%,-50%);
   margin: auto;
   background-color:#f4f3f3;
-  padding: 60px 45px;
+  padding: 30px 20px;
 }
 .inputbox{
-  display: flex;
   margin: 15px 0;
 }
-input:focus{
-  outline: none;
-}
 button{
-  padding: 10px 30px;
-  margin-top: 10px;
+  padding: 5px 15px;
   border-radius: 5px;
   background-color:#9f2f2e;
   color: #fff;
   border: none;
   font-weight: bold;
 }
-.radiobox{
+.inputbox{
   display: flex;
-  flex-direction: column;
-}.radiobox>div>label{
-  float: left;
 }
-.radiobox>div>input{
-  float: left;
-  transform: translate(0,30%);
-  margin-right: 5px;
-}
+
+
 </style>

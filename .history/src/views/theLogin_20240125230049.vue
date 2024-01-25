@@ -30,8 +30,8 @@
         <div class="inputbox">
           <label for="password">密码：</label>
           <input id="passeword" required type="password" name="password"  placeholder="请输入密码">
-        </div><router-link to="/main">
-        <button type="submit">登录</button></router-link>
+        </div>
+        <button type="submit"><router-link to="/main">登录</router-link></button>
       </form>
     </div>
     <div class="image">

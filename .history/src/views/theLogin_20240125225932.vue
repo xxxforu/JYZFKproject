@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  
+  <!-- <router-link to="/main">登录</router-link> -->
   <div class="container">
     <div class="loginBox">
       
@@ -13,7 +13,7 @@
           <label >您是：</label>
           <div class="radiobox">
             <div>
-              <input type="radio" id="manager" name="Worktype" checked>
+              <input type="radio" id="manager" name="Worktype">
               <label for="manager">管理员</label>
             </div>
             
@@ -30,8 +30,8 @@
         <div class="inputbox">
           <label for="password">密码：</label>
           <input id="passeword" required type="password" name="password"  placeholder="请输入密码">
-        </div><router-link to="/main">
-        <button type="submit">登录</button></router-link>
+        </div>
+        <button type="submit">登录</button>
       </form>
     </div>
     <div class="image">
@@ -76,6 +76,7 @@ h2{
   margin: 15px 0;
 }
 input:focus{
+  border: none;
   outline: none;
 }
 button{
