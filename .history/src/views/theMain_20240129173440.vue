@@ -124,8 +124,8 @@ const handleOpen = (key, keyPath) => {
 const handleClose = (key, keyPath) => {
   console.log(key, keyPath)
 }
-
-
+var width = window.innerWidth
+console.log(width);
 
 
 </script>

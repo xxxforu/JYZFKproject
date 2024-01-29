@@ -132,8 +132,23 @@ const handleClose = (key, keyPath) => {
 
 <script>
   export default {
-    
+    data() {
+    return {
+      windowWidth: 0
+    };
+  },
+  mounted() {
+    this.getWindowWidth();
+    window.addEventListener('resize', this.getWindowWidth);
+  },
+  beforeUnmount() {
+    window.removeEventListener('resize', this.getWindowWidth);
+  },
     methods: {
+      getWindowWidth() {
+      this.windowWidth = window.innerWidth;
+      console.log(this.windowWidth);
+    },
       open() {
         this.$confirm('是否确定退出登录?', '提示', {
           confirmButtonText: '退出',

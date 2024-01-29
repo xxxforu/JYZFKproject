@@ -12,16 +12,10 @@
     background-color="#958b8c"
     text-color="#ffffff"
   >
-  <div>
-    <el-menu-item  id="message">
-     <img id="navBarAvatar" v-show="!isCollapse"  src="../assets/image/未命名1677596819.png" alt="">
-      <span v-show="!isCollapse">用户</span>
-   </el-menu-item>
- </div>
   <router-link to="/main/smallMain">
     <el-menu-item index="1">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" data-v-ea893728=""><path fill="currentColor" d="M192 413.952V896h640V413.952L512 147.328zM139.52 374.4l352-293.312a32 32 0 0 1 40.96 0l352 293.312A32 32 0 0 1 896 398.976V928a32 32 0 0 1-32 32H160a32 32 0 0 1-32-32V398.976a32 32 0 0 1 11.52-24.576"></path></svg>
-      <template #title>主页</template>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" data-v-ea893728=""><path fill="currentColor" d="M448 68.48v64.832A384.128 384.128 0 0 0 512 896a384.128 384.128 0 0 0 378.688-320h64.768A448.128 448.128 0 0 1 64 512 448.128 448.128 0 0 1 448 68.48z"></path><path fill="currentColor" d="M576 97.28V448h350.72A384.064 384.064 0 0 0 576 97.28zM512 64V33.152A448 448 0 0 1 990.848 512H512z"></path></svg>
+    <template #title>主页</template>
     </el-menu-item>
   </router-link>
 
@@ -39,10 +33,11 @@
     </el-menu-item>
   </router-link>
 
+  
     <el-sub-menu index="4">
       <template #title>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" data-v-ea893728=""><path fill="currentColor" d="M280.768 753.728 691.456 167.04a32 32 0 1 1 52.416 36.672L314.24 817.472a32 32 0 0 1-45.44 7.296l-230.4-172.8a32 32 0 0 1 38.4-51.2l203.968 152.96zM736 448a32 32 0 1 1 0-64h192a32 32 0 1 1 0 64zM608 640a32 32 0 0 1 0-64h319.936a32 32 0 1 1 0 64zM480 832a32 32 0 1 1 0-64h447.936a32 32 0 1 1 0 64z"></path></svg>
-        <span>安全日志查看</span>
+        安全日志查看
       </template>
       <el-menu-item-group>
         <router-link to="/main/visualSL">
@@ -79,7 +74,6 @@
       <template #title><el-button  type="text">退出登录</el-button></template>
     </el-menu-item>
   </div>
-  
    
     <!-- 如果要禁用 就在el-menu-item 标签里加一个属性disabled 可以考虑在权限分配时加入 -->
     <!-- <el-menu-item index="3" disabled>
@@ -125,14 +119,10 @@ const handleClose = (key, keyPath) => {
   console.log(key, keyPath)
 }
 
-
-
-
 </script>
 
 <script>
   export default {
-    
     methods: {
       open() {
         this.$confirm('是否确定退出登录?', '提示', {
@@ -141,13 +131,16 @@ const handleClose = (key, keyPath) => {
           type: 'warning'
         }).then(() => {
           this.$router.push('/')
-          //此组件自带的提示样式
           this.$message({
             type: 'success',
             message: '退出成功!'
           });
          
-        }).catch(() => {     
+        }).catch(() => {
+          // this.$message({
+          //   type: 'info',
+          //   message: '已取消退出'
+          // });          
         });
       }
     }
@@ -225,16 +218,5 @@ svg{
 .el-menu--inline{
   height: fit-content;
   padding-top: 0 !important;
-}
-#navBarAvatar{
-  width: 50px;
-  height: 50px;
-  margin-right:10%;
-}
-#message{
-  font-size: 14px;
-  font-weight: bold;
-  color: #fff;
-  margin-bottom: 5vh;
 }
 </style>

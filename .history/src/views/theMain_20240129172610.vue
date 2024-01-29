@@ -125,14 +125,10 @@ const handleClose = (key, keyPath) => {
   console.log(key, keyPath)
 }
 
-
-
-
 </script>
 
 <script>
   export default {
-    
     methods: {
       open() {
         this.$confirm('是否确定退出登录?', '提示', {

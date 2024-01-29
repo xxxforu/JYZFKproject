@@ -48,6 +48,7 @@
         widthOK:true
       }
     },
+    
     mounted() {
       this.getWindowWidth();
       window.addEventListener('resize', this.getWindowWidth);
@@ -56,7 +57,6 @@
       window.removeEventListener('resize', this.getWindowWidth);
     },
     methods: {
-      //获取浏览器窗口宽度 如果小于990 就不要图片了
       getWindowWidth() {
         console.log(window.innerWidth)
         if(window.innerWidth<990){

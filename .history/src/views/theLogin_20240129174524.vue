@@ -2,7 +2,7 @@
 <template>
   
   <div class="container">
-    <div :class="widthOK?'both loginbox':'loginbox'">
+    <div class="loginBox">
       
       <form action="/user/login" method="post" id="loginForm">
         <h2>登录</h2>
@@ -35,7 +35,7 @@
         <button type="submit">登录</button></router-link>
       </form>
     </div>
-    <div class="image" v-show="widthOK">
+    <div class="image">
       <img src="../assets/image/首页图.png" alt="图片无法显示">
     </div>
   </div>
@@ -43,11 +43,7 @@
 </template>
   <script >
   export default {
-    data(){
-      return{
-        widthOK:true
-      }
-    },
+    
     mounted() {
       this.getWindowWidth();
       window.addEventListener('resize', this.getWindowWidth);
@@ -56,14 +52,9 @@
       window.removeEventListener('resize', this.getWindowWidth);
     },
     methods: {
-      //获取浏览器窗口宽度 如果小于990 就不要图片了
       getWindowWidth() {
         console.log(window.innerWidth)
-        if(window.innerWidth<990){
-          this.widthOK=false
-        } else{
-          this.widthOK=true
-        }
+        <!-- if(window.innerWidth) -->
       }
     }
   };
@@ -83,7 +74,7 @@ input {
 h2{
   margin-bottom: 40px;
 }
-.both{
+.loginBox{
   position: relative;
   flex: 1;
 }

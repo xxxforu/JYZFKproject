@@ -1,21 +1,21 @@
+<script setup>
+
+</script>
 
 <template>
   
   <div class="container">
-    <div :class="widthOK?'both loginbox':'loginbox'">
-      
-      <form action="/user/login" method="post" id="loginForm">
+    <div class="loginBox">
+    
+      <form  method="post" id="loginForm">
+        <div id="input"> 
         <h2>登录</h2>
         <div class="inputbox">
           <label >您是：</label>
           <div class="radiobox">
             <div>
-              <input type="radio" id="aLLManager" name="Worktype" checked>
-              <label for="manager">总公司管理员</label>
-            </div>
-            <div>
-              <input type="radio" id="partManager" name="Worktype" checked>
-              <label for="manager">分公司管理员</label>
+              <input type="radio" id="manager" name="Worktype" checked>
+              <label for="manager">管理员</label>
             </div>
             
             <div>
@@ -31,44 +31,23 @@
         <div class="inputbox">
           <label for="password">密码：</label>
           <input id="passeword" required type="password" name="password"  placeholder="请输入密码">
-        </div><router-link to="/main">
-        <button type="submit">登录</button></router-link>
+        </div>
+        </div>
+        <div id="submit">
+          <router-link  to="/main">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" data-v-ea893728=""><path fill="currentColor" d="M338.752 104.704a64 64 0 0 0 0 90.496l316.8 316.8-316.8 316.8a64 64 0 0 0 90.496 90.496l362.048-362.048a64 64 0 0 0 0-90.496L429.248 104.704a64 64 0 0 0-90.496 0z"></path></svg>
+            <span>GO</span>
+          </router-link>
+        </div>
+        
       </form>
     </div>
-    <div class="image" v-show="widthOK">
+    <div class="image">
       <img src="../assets/image/首页图.png" alt="图片无法显示">
     </div>
   </div>
-  
+
 </template>
-  <script >
-  export default {
-    data(){
-      return{
-        widthOK:true
-      }
-    },
-    mounted() {
-      this.getWindowWidth();
-      window.addEventListener('resize', this.getWindowWidth);
-    },
-    beforeUnmount() {
-      window.removeEventListener('resize', this.getWindowWidth);
-    },
-    methods: {
-      //获取浏览器窗口宽度 如果小于990 就不要图片了
-      getWindowWidth() {
-        console.log(window.innerWidth)
-        if(window.innerWidth<990){
-          this.widthOK=false
-        } else{
-          this.widthOK=true
-        }
-      }
-    }
-  };
-  </script>
-  
 
 <style scoped>
 .container{
@@ -83,19 +62,15 @@ input {
 h2{
   margin-bottom: 40px;
 }
-.both{
+.loginBox{
   position: relative;
   flex: 1;
 }
 .image{
   flex: 1;
-  height: 100vh;
-}
-.image img{
-  height: 95%;
-  margin: auto;
 }
 #loginForm{
+  display: flex;
   border-radius: 10px;
   position: absolute;
   top: 50%;
@@ -103,7 +78,14 @@ h2{
   transform: translate(-50%,-50%);
   margin: auto;
   background-color:#f4f3f3;
-  padding: 60px 45px;
+  padding: 10px;
+}
+#login{
+  flex: 4;
+}
+#submit{
+  flex: 1;
+  height: 100%;
 }
 .inputbox{
   display: flex;

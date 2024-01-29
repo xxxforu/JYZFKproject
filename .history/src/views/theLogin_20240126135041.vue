@@ -1,21 +1,21 @@
+<script setup>
+
+</script>
 
 <template>
   
   <div class="container">
-    <div :class="widthOK?'both loginbox':'loginbox'">
-      
+    <div class="loginBox">
+    
       <form action="/user/login" method="post" id="loginForm">
+        <div id="input"> 
         <h2>登录</h2>
         <div class="inputbox">
           <label >您是：</label>
           <div class="radiobox">
             <div>
-              <input type="radio" id="aLLManager" name="Worktype" checked>
-              <label for="manager">总公司管理员</label>
-            </div>
-            <div>
-              <input type="radio" id="partManager" name="Worktype" checked>
-              <label for="manager">分公司管理员</label>
+              <input type="radio" id="manager" name="Worktype" checked>
+              <label for="manager">管理员</label>
             </div>
             
             <div>
@@ -31,44 +31,22 @@
         <div class="inputbox">
           <label for="password">密码：</label>
           <input id="passeword" required type="password" name="password"  placeholder="请输入密码">
-        </div><router-link to="/main">
-        <button type="submit">登录</button></router-link>
+        </div>
+        </div>
+        <div id="submit">
+          <router-link  to="/main">
+        <button  type="submit">登录</button>
+        </router-link>
+        </div>
+        <
       </form>
     </div>
-    <div class="image" v-show="widthOK">
+    <div class="image">
       <img src="../assets/image/首页图.png" alt="图片无法显示">
     </div>
   </div>
-  
+
 </template>
-  <script >
-  export default {
-    data(){
-      return{
-        widthOK:true
-      }
-    },
-    mounted() {
-      this.getWindowWidth();
-      window.addEventListener('resize', this.getWindowWidth);
-    },
-    beforeUnmount() {
-      window.removeEventListener('resize', this.getWindowWidth);
-    },
-    methods: {
-      //获取浏览器窗口宽度 如果小于990 就不要图片了
-      getWindowWidth() {
-        console.log(window.innerWidth)
-        if(window.innerWidth<990){
-          this.widthOK=false
-        } else{
-          this.widthOK=true
-        }
-      }
-    }
-  };
-  </script>
-  
 
 <style scoped>
 .container{
@@ -83,19 +61,15 @@ input {
 h2{
   margin-bottom: 40px;
 }
-.both{
+.loginBox{
   position: relative;
   flex: 1;
 }
 .image{
   flex: 1;
-  height: 100vh;
-}
-.image img{
-  height: 95%;
-  margin: auto;
 }
 #loginForm{
+  display: flex;
   border-radius: 10px;
   position: absolute;
   top: 50%;

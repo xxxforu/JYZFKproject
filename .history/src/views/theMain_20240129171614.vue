@@ -13,9 +13,9 @@
     text-color="#ffffff"
   >
   <div>
-    <el-menu-item  id="message">
-     <img id="navBarAvatar" v-show="!isCollapse"  src="../assets/image/未命名1677596819.png" alt="">
-      <span v-show="!isCollapse">用户</span>
+    <el-menu-item v-show="!isCollapse" id="message">
+     <img id="navBarAvatar"  src="../assets/image/未命名1677596819.png" alt="">
+      用户
    </el-menu-item>
  </div>
   <router-link to="/main/smallMain">
@@ -125,14 +125,10 @@ const handleClose = (key, keyPath) => {
   console.log(key, keyPath)
 }
 
-
-
-
 </script>
 
 <script>
   export default {
-    
     methods: {
       open() {
         this.$confirm('是否确定退出登录?', '提示', {
@@ -141,13 +137,16 @@ const handleClose = (key, keyPath) => {
           type: 'warning'
         }).then(() => {
           this.$router.push('/')
-          //此组件自带的提示样式
           this.$message({
             type: 'success',
             message: '退出成功!'
           });
          
-        }).catch(() => {     
+        }).catch(() => {
+          // this.$message({
+          //   type: 'info',
+          //   message: '已取消退出'
+          // });          
         });
       }
     }

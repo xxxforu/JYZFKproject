@@ -124,8 +124,10 @@ const handleOpen = (key, keyPath) => {
 const handleClose = (key, keyPath) => {
   console.log(key, keyPath)
 }
-
-
+window.onresize = function() {
+  var width = window.innerWidth;
+  console.log("当前窗口宽度为：" + width);
+};
 
 
 </script>

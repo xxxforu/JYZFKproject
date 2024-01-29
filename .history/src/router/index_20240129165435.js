@@ -15,7 +15,7 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     children:[
-      { path:'/main',component:() => import('../views/smallMain.vue')},
+      { path:'/main',component:() => import('../views/checkViolations.vue')},
       {
         path:'/main/smallMain',
         component:()=>import('../views/smallMain.vue')
