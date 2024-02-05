@@ -166,7 +166,6 @@ const handleClose = (key, keyPath) => {}
 <style>
 #container{
   position: relative;
-  overflow: hidden;
 }
 .el-radio-button{
   --el-radio-button-checked-bg-color:#9f2f2e!important;
@@ -191,7 +190,7 @@ const handleClose = (key, keyPath) => {}
   font-weight: bold;
   font-size: 20px;
 }
-.el-menu .is-active{
+.is-active{
   font-weight: bold;
   font-size: 20px !important;
 }

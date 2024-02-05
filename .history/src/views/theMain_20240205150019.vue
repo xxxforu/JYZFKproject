@@ -191,7 +191,7 @@ const handleClose = (key, keyPath) => {}
   font-weight: bold;
   font-size: 20px;
 }
-.el-menu .is-active{
+.is-active{
   font-weight: bold;
   font-size: 20px !important;
 }

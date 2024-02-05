@@ -21,6 +21,7 @@ import NoticeBox from '../components/NoticeBox.vue';
   })
 
   const toAnnounceBulletin =()=>{
+    console.log("toAnnounceBulletin");
     router.push({
       path:'/main/announceBulletin'
   })
@@ -33,7 +34,7 @@ import NoticeBox from '../components/NoticeBox.vue';
     <el-input
         v-model="search"
         class="w-50 m-2"
-        placeholder="搜索主题 / 内容"
+        placeholder="搜索主题/内容"
         :prefix-icon="Search"
         clearable
       />

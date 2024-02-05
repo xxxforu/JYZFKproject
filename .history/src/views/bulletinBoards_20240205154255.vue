@@ -1,10 +1,10 @@
 <script setup>
 import { Search } from '@element-plus/icons-vue';
 import { onMounted, ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import NoticeBox from '../components/NoticeBox.vue';
   const router = useRouter()
-  // const route = useRoute()
+  const route = useRoute()
   const search = ref('')
   const activeName = ref('announcement')
   const ableAnnounce = ref(false) //是否有权限发布通知
@@ -21,6 +21,7 @@ import NoticeBox from '../components/NoticeBox.vue';
   })
 
   const toAnnounceBulletin =()=>{
+    console.log("toAnnounceBulletin");
     router.push({
       path:'/main/announceBulletin'
   })
@@ -33,7 +34,7 @@ import NoticeBox from '../components/NoticeBox.vue';
     <el-input
         v-model="search"
         class="w-50 m-2"
-        placeholder="搜索主题 / 内容"
+        placeholder="搜索主题/内容"
         :prefix-icon="Search"
         clearable
       />

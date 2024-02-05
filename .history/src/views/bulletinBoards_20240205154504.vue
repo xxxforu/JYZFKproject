@@ -21,6 +21,7 @@ import NoticeBox from '../components/NoticeBox.vue';
   })
 
   const toAnnounceBulletin =()=>{
+    console.log("toAnnounceBulletin");
     router.push({
       path:'/main/announceBulletin'
   })

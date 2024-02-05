@@ -1,29 +1,20 @@
 <script setup>
 import { Search } from '@element-plus/icons-vue';
 import { onMounted, ref } from 'vue';
-import { useRouter } from 'vue-router';
 import NoticeBox from '../components/NoticeBox.vue';
-  const router = useRouter()
-  // const route = useRoute()
   const search = ref('')
   const activeName = ref('announcement')
-  const ableAnnounce = ref(false) //是否有权限发布通知
 
   const handleClick = (tab,event)=>{
     console.log(tab,event);
   }
   onMounted(()=>{
-    localStorage.setItem('role',1)
-    const role = localStorage.getItem("role")
-    if(role==1){//代表是总公司管理员，那就可以发布通知
-      ableAnnounce.value = true
-    }
+    localStorage.setItem('role',0)
+    // const role = localStorage.getItem("role")
   })
 
   const toAnnounceBulletin =()=>{
-    router.push({
-      path:'/main/announceBulletin'
-  })
+    console.log("toAnnounceBulletin");
   }
   </script>
 
@@ -33,7 +24,7 @@ import NoticeBox from '../components/NoticeBox.vue';
     <el-input
         v-model="search"
         class="w-50 m-2"
-        placeholder="搜索主题 / 内容"
+        placeholder="搜索主题/内容"
         :prefix-icon="Search"
         clearable
       />
@@ -52,8 +43,8 @@ import NoticeBox from '../components/NoticeBox.vue';
       </el-tabs>
       
   </div>
-  <div v-if="ableAnnounce" id="annouce">
-    <button id="annouceButton" @click="toAnnounceBulletin">+</button>
+  <div id="annouce">
+    <button id="annouceButton" @click="toAnnounceBulletin"></button>
   </div>
   
   
@@ -62,16 +53,9 @@ import NoticeBox from '../components/NoticeBox.vue';
 <style scoped> 
 #annouceButton{
   background-color: var(--el-color-primary);
-  width: 50px;
-  height: 50px;
+  width: 25px;
+  height: 25px;
   border-radius: 50%;
-  border: none;
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translate(-50%,-50%);
-  font-size: 28px;
-  color: #fff;
 }
 #annouce{
   position: absolute;

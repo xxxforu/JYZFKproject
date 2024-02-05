@@ -1,30 +1,17 @@
 <script setup>
 import { Search } from '@element-plus/icons-vue';
 import { onMounted, ref } from 'vue';
-import { useRouter } from 'vue-router';
 import NoticeBox from '../components/NoticeBox.vue';
-  const router = useRouter()
-  // const route = useRoute()
   const search = ref('')
   const activeName = ref('announcement')
-  const ableAnnounce = ref(false) //是否有权限发布通知
 
   const handleClick = (tab,event)=>{
     console.log(tab,event);
   }
   onMounted(()=>{
-    localStorage.setItem('role',1)
-    const role = localStorage.getItem("role")
-    if(role==1){//代表是总公司管理员，那就可以发布通知
-      ableAnnounce.value = true
-    }
+    localStorage.setItem('role',0)
+    // const role = localStorage.getItem("role")
   })
-
-  const toAnnounceBulletin =()=>{
-    router.push({
-      path:'/main/announceBulletin'
-  })
-  }
   </script>
 
 <template>
@@ -33,12 +20,11 @@ import NoticeBox from '../components/NoticeBox.vue';
     <el-input
         v-model="search"
         class="w-50 m-2"
-        placeholder="搜索主题 / 内容"
+        placeholder="搜索主题/内容"
         :prefix-icon="Search"
         clearable
       />
     <el-tabs v-model="activeName" class="demo-tabs" @tab-click="handleClick">
-      
         <el-tab-pane label="公告" name="announcement">
           <NoticeBox /><NoticeBox /><NoticeBox />
           <NoticeBox /><NoticeBox /><NoticeBox />
@@ -52,50 +38,27 @@ import NoticeBox from '../components/NoticeBox.vue';
       </el-tabs>
       
   </div>
-  <div v-if="ableAnnounce" id="annouce">
-    <button id="annouceButton" @click="toAnnounceBulletin">+</button>
-  </div>
+  <div id="annouce">11111111</div>
   
   
 </template>
 
 <style scoped> 
-#annouceButton{
-  background-color: var(--el-color-primary);
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  border: none;
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translate(-50%,-50%);
-  font-size: 28px;
-  color: #fff;
-}
 #annouce{
   position: absolute;
   bottom: 0;
   right: 0;
   width: 100%;
-  height: 7vh;
+  height: 10vh;
   z-index: 10;
   background-color: #d9d9d9;
   border-radius: 20px 20px 0 0;
-  
 }
 .el-tab-pane{
-  height: 80vh;
-  overflow: auto;
-  scroll-behavior: smooth;
-  margin-bottom: 7vh;
-}
-::-webkit-scrollbar {
-  /*隐藏滚轮*/
-  display: none;
-  }
-.container-wrapper{
-   overflow:hidden
+  height: 100%;
+  background-color:aquamarine;
+  overflow: scroll;
+  
 }
 #navSearchBar{
   margin-top: 2vh;
