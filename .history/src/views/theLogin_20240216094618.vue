@@ -4,7 +4,7 @@
   <div class="container">
     <div :class="widthOK?'both loginbox':'loginbox'">
       
-      <div id="loginForm">
+      <form id="loginForm">
         <h2>登录</h2>
         <div class="inputbox">
           <label >您是：</label>
@@ -31,11 +31,9 @@
         <div class="inputbox">
           <label for="password">密码：</label>
           <input id="passeword" required type="password" v-model="password" name="password"  placeholder="请输入密码">
-        </div>
-        <!-- <router-link to="/main"> -->
-          <button type="submit" @click="goLogin">登录</button>
-        <!-- </router-link> -->
-      </div>
+        </div><router-link to="/main">
+        <button type="submit" @click="goLogin">登录</button></router-link>
+      </form>
     </div>
     <div class="image" v-show="widthOK">
       <img src="../assets/image/首页图.png" alt="图片无法显示">
@@ -43,27 +41,23 @@
   </div>
   
 </template>
-
-
   <script >
   export default {
     data(){
       return{
         widthOK:true,
-        number:"",
-        password:""
+        number:0,
+        password:0
       }
     },
     mounted() {
       this.getWindowWidth();
       window.addEventListener('resize', this.getWindowWidth);
-      
     },
     beforeUnmount() {
       window.removeEventListener('resize', this.getWindowWidth);
     },
     methods: {
-      
       //获取浏览器窗口宽度 如果小于990 就不要图片了
       getWindowWidth() {
         console.log(window.innerWidth)
@@ -73,44 +67,19 @@
           this.widthOK=true
         }
       },
-      // 登录接口
       goLogin(){
-        var axios = require('axios');
-        var body = JSON.stringify({
-           "number": this.number,
-           "password": this.password
-        });
-
-        var config = {
-           method: 'post',
-           url: 'http://111.230.198.4:7001/api/user/login',
-           headers: { 
-              // 'User-Agent': 'Apifox/1.0.0 (https://www.apifox.cn)', 
-              'Content-Type': 'application/json', 
-              'Accept': '*/*', 
-              // 'Host': '111.230.198.4:7001', 
-              // 'Connection': 'keep-alive'
-           },
-           data : body
-        };
-        var that = this;
-        axios(config)
-        .then(function (response) {
-           var data= response.data.data;
-           localStorage.setItem("token",data.token)
-           localStorage.setItem("role",data.role)
-           localStorage.setItem("belong",data.belong);
-          //  设置好localStorage后再跳转页面
-           that.$router.push({path:"/main"})
-        })
-        .catch(function (error) {
-           console.log(error);
-        });
-        
+        this.$axios.post('/user/login',{
+          number:this.number.value
+          password:this.password
+        }).then(res=>{
+				console.log(res.data);
+			})
+		  
+      }
     }
-  }
   };
   </script>
+  
 
 <style scoped>
 .container{

@@ -134,7 +134,10 @@ import { ref } from 'vue';
 const isCollapse = ref(false)
 const handleOpen = (key, keyPath) => {}
 const handleClose = (key, keyPath) => {}
-const belong = localStorage.getItem("belong")
+const belong = localStorage.getItem("belongd")
+
+
+
 
 </script>
 
@@ -257,8 +260,5 @@ a{
 .el-menu-item-group__title{
   padding-top: 0 !important;
   padding-bottom: 0 !important;
-}
-#message span {
-  font-size: 20px;
 }
 </style>

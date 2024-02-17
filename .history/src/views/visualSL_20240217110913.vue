@@ -357,4 +357,10 @@ const optiona = [
 .select_item {
   font-size: 14px;
 }
+.bodyPagevSL > div:nth-child(1)>span{
+  background-color: aqua;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 </style>

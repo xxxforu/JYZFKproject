@@ -357,4 +357,9 @@ const optiona = [
 .select_item {
   font-size: 14px;
 }
+.el-select > span{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 </style>

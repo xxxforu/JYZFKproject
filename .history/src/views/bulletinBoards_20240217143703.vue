@@ -1,7 +1,7 @@
 <script setup>
 import { Search } from '@element-plus/icons-vue';
 import axios from 'axios';
-import { onMounted, ref } from 'vue';
+import { onBeforeUpdate, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import NoticeBox from '../components/NoticeBox.vue';
   const router = useRouter()
@@ -9,33 +9,20 @@ import NoticeBox from '../components/NoticeBox.vue';
   const search = ref('')
   const activeName = ref('announcement')
   const ableAnnounce = ref(false) //是否有权限发布通知
-  
+  const type = localStorage.getItem("role")
+  console.log(type);
+  axios.get('/branch/getAnnouncementList?type='+type+'&page=1&size=8').then(res=>{
+  console.log(res.data);
+  })
   const handleClick = (tab,event)=>{
     console.log(tab,event);
   }
-  onMounted(()=>{
+  onBeforeUpdate(()=>{
     const role = localStorage.getItem("role")
     console.log(role);
-    if(role=="1"||role=="2"){//总/分公司管理员，那就可以发布通知
+    if(role=="1"){//代表是总公司管理员，那就可以发布通知
       ableAnnounce.value = true
     }
-
-    // 不同的身份接口不一样
-    switch(role){
-    case "1":{
-      axios.get('/central/getAnnouncementList?type=1&page=1&size=8').then(res=>{
-        console.log(res.data);
-    })
-    break;
-    }
-    case "2" :{
-      axios.get('/branch/getAnnouncementList?type=1&page=1&size=8').then(res=>{
-        console.log(res.data);
-    })
-    break;
-    }
-  }
-  
   })
 
   const toAnnounceBulletin =()=>{

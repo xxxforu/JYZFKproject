@@ -100,8 +100,7 @@
            localStorage.setItem("token",data.token)
            localStorage.setItem("role",data.role)
            localStorage.setItem("belong",data.belong);
-          //  设置好localStorage后再跳转页面
-           that.$router.push({path:"/main"})
+           that.$router.push({name:"main"})
         })
         .catch(function (error) {
            console.log(error);

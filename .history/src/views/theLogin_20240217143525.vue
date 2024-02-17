@@ -4,7 +4,7 @@
   <div class="container">
     <div :class="widthOK?'both loginbox':'loginbox'">
       
-      <div id="loginForm">
+      <form id="loginForm">
         <h2>登录</h2>
         <div class="inputbox">
           <label >您是：</label>
@@ -32,10 +32,10 @@
           <label for="password">密码：</label>
           <input id="passeword" required type="password" v-model="password" name="password"  placeholder="请输入密码">
         </div>
-        <!-- <router-link to="/main"> -->
+        <router-link to="/main">
           <button type="submit" @click="goLogin">登录</button>
-        <!-- </router-link> -->
-      </div>
+        </router-link>
+      </form>
     </div>
     <div class="image" v-show="widthOK">
       <img src="../assets/image/首页图.png" alt="图片无法显示">
@@ -88,25 +88,24 @@
               // 'User-Agent': 'Apifox/1.0.0 (https://www.apifox.cn)', 
               'Content-Type': 'application/json', 
               'Accept': '*/*', 
-              // 'Host': '111.230.198.4:7001', 
-              // 'Connection': 'keep-alive'
+              'Host': '111.230.198.4:7001', 
+              'Connection': 'keep-alive'
            },
            data : body
         };
-        var that = this;
+        var that= this
         axios(config)
         .then(function (response) {
            var data= response.data.data;
+           console.log(data);
            localStorage.setItem("token",data.token)
            localStorage.setItem("role",data.role)
            localStorage.setItem("belong",data.belong);
-          //  设置好localStorage后再跳转页面
-           that.$router.push({path:"/main"})
+           that.$router.push('/main');
         })
         .catch(function (error) {
            console.log(error);
         });
-        
     }
   }
   };

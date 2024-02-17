@@ -93,15 +93,19 @@
            },
            data : body
         };
-        var that = this;
         axios(config)
         .then(function (response) {
            var data= response.data.data;
            localStorage.setItem("token",data.token)
            localStorage.setItem("role",data.role)
            localStorage.setItem("belong",data.belong);
-          //  设置好localStorage后再跳转页面
-           that.$router.push({path:"/main"})
+           this.$router.push({
+          path:"/main",
+          query:{
+            role:data.role,
+            belong:data.belong
+          }
+        })
         })
         .catch(function (error) {
            console.log(error);

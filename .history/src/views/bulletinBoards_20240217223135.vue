@@ -20,15 +20,14 @@ import NoticeBox from '../components/NoticeBox.vue';
       ableAnnounce.value = true
     }
 
-    // 不同的身份接口不一样
     switch(role){
-    case "1":{
+    case 1:{
       axios.get('/central/getAnnouncementList?type=1&page=1&size=8').then(res=>{
         console.log(res.data);
     })
     break;
     }
-    case "2" :{
+    case 2 :{
       axios.get('/branch/getAnnouncementList?type=1&page=1&size=8').then(res=>{
         console.log(res.data);
     })

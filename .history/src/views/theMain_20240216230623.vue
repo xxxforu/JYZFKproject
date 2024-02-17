@@ -15,7 +15,7 @@
   <div>
     <el-menu-item  id="message">
      <img id="navBarAvatar" v-show="!isCollapse"  src="../assets/image/未命名1677596819.png" alt="">
-      <span v-show="!isCollapse">{{belong}}</span>
+      <span v-show="!isCollapse">用户</span>
    </el-menu-item>
  </div>
   <router-link to="/main/bulletinBoards">
@@ -134,7 +134,9 @@ import { ref } from 'vue';
 const isCollapse = ref(false)
 const handleOpen = (key, keyPath) => {}
 const handleClose = (key, keyPath) => {}
-const belong = localStorage.getItem("belong")
+
+
+
 
 </script>
 
@@ -148,11 +150,9 @@ const belong = localStorage.getItem("belong")
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          // 成功退出时清除缓存信息
           localStorage.removeItem("token")
           localStorage.removeItem("role")
           localStorage.removeItem("belong")
-
           this.$router.push('/')
           //此组件自带的提示样式
           this.$message({
@@ -257,8 +257,5 @@ a{
 .el-menu-item-group__title{
   padding-top: 0 !important;
   padding-bottom: 0 !important;
-}
-#message span {
-  font-size: 20px;
 }
 </style>

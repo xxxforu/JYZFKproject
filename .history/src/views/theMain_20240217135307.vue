@@ -153,7 +153,7 @@ const belong = localStorage.getItem("belong")
           localStorage.removeItem("role")
           localStorage.removeItem("belong")
 
-          this.$router.push('/')
+          this.$router.push('/main')
           //此组件自带的提示样式
           this.$message({
             type: 'success',

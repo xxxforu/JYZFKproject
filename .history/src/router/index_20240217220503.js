@@ -8,13 +8,14 @@ const routes = [
     component: login
   },
   {
-    path: '/main',
+    path: '/main/:role/:belong',
+    name: 'main',
     component:main,
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     children:[
-      { path:'/main',component:() => import('../views/bulletinBoards.vue')},
+      { path:'/main/:role/:belong',component:() => import('../views/bulletinBoards.vue')},
       {
         path:'/main/bulletinBoards',
         component:()=>import('../views/bulletinBoards.vue')

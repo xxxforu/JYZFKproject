@@ -4,7 +4,7 @@
   <div class="container">
     <div :class="widthOK?'both loginbox':'loginbox'">
       
-      <div id="loginForm">
+      <form id="loginForm">
         <h2>登录</h2>
         <div class="inputbox">
           <label >您是：</label>
@@ -31,11 +31,9 @@
         <div class="inputbox">
           <label for="password">密码：</label>
           <input id="passeword" required type="password" v-model="password" name="password"  placeholder="请输入密码">
-        </div>
-        <!-- <router-link to="/main"> -->
-          <button type="submit" @click="goLogin">登录</button>
-        <!-- </router-link> -->
-      </div>
+        </div><router-link to="/main">
+        <button type="submit" @click="goLogin">登录</button></router-link>
+      </form>
     </div>
     <div class="image" v-show="widthOK">
       <img src="../assets/image/首页图.png" alt="图片无法显示">
@@ -51,7 +49,8 @@
       return{
         widthOK:true,
         number:"",
-        password:""
+        password:"",
+        type:localStorage.getItem("role")
       }
     },
     mounted() {
@@ -63,6 +62,7 @@
       window.removeEventListener('resize', this.getWindowWidth);
     },
     methods: {
+      // 演示选项式api内如何接接口
       
       //获取浏览器窗口宽度 如果小于990 就不要图片了
       getWindowWidth() {
@@ -88,25 +88,23 @@
               // 'User-Agent': 'Apifox/1.0.0 (https://www.apifox.cn)', 
               'Content-Type': 'application/json', 
               'Accept': '*/*', 
-              // 'Host': '111.230.198.4:7001', 
-              // 'Connection': 'keep-alive'
+              'Host': '111.230.198.4:7001', 
+              'Connection': 'keep-alive'
            },
            data : body
         };
-        var that = this;
+
         axios(config)
         .then(function (response) {
            var data= response.data.data;
+           console.log(data);
            localStorage.setItem("token",data.token)
            localStorage.setItem("role",data.role)
-           localStorage.setItem("belong",data.belong);
-          //  设置好localStorage后再跳转页面
-           that.$router.push({path:"/main"})
+           localStorage.setItem("belong",data.belong)
         })
         .catch(function (error) {
            console.log(error);
         });
-        
     }
   }
   };

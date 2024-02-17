@@ -8,7 +8,8 @@ const routes = [
     component: login
   },
   {
-    path: '/main',
+    path: '/main/:role/:belong',
+    name: 'main',
     component:main,
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
@@ -16,7 +17,7 @@ const routes = [
     children:[
       { path:'/main',component:() => import('../views/bulletinBoards.vue')},
       {
-        path:'/main/bulletinBoards',
+        path:'/main/:role/:belong/bulletinBoards',
         component:()=>import('../views/bulletinBoards.vue')
       },
       {

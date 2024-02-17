@@ -88,25 +88,24 @@
               // 'User-Agent': 'Apifox/1.0.0 (https://www.apifox.cn)', 
               'Content-Type': 'application/json', 
               'Accept': '*/*', 
-              // 'Host': '111.230.198.4:7001', 
-              // 'Connection': 'keep-alive'
+              'Host': '111.230.198.4:7001', 
+              'Connection': 'keep-alive'
            },
            data : body
         };
-        var that = this;
         axios(config)
         .then(function (response) {
            var data= response.data.data;
            localStorage.setItem("token",data.token)
            localStorage.setItem("role",data.role)
            localStorage.setItem("belong",data.belong);
-          //  设置好localStorage后再跳转页面
-           that.$router.push({path:"/main"})
+           
         })
         .catch(function (error) {
            console.log(error);
         });
-        
+        console.log(this.$router);
+        // this.$router.push("/main")
     }
   }
   };
