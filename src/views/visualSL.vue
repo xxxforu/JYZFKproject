@@ -1,11 +1,23 @@
 <!--安全日志查看_可视化统计-->
 <script setup>
-import { onMounted, ref } from 'vue';
+import { ref, onMounted } from 'vue';
 
 import * as echarts from "echarts";
+import axios from "axios";
 
 const radio1 = ref('当天')
 const radio2 = ref('当天')
+
+//!111
+const eInfo1 =ref([])
+axios.get(' http://127.0.0.1:4523/m1/3942191-0-default/branch/getItemException?flag=1').then(res => {
+  eInfo1.value= res.data.data
+  console.log(res.data);
+  console.log('!!!')
+  console.log(eInfo1.value);
+
+})
+
 
 //图表一
 const echart1=ref()
@@ -31,7 +43,7 @@ function init1() {
     },
     legend: {
       orient: 'vertical',
-      x: 'right',
+      x: '350px',
       y: '30px',
       textStyle: {
         fontWeight: 700,
@@ -41,7 +53,7 @@ function init1() {
       {
         name: 'Access From',
         type: 'pie',
-        center: ['45%','40%'],
+        center: ['35%','40%'],
         radius: '50%',
         data: [
           { value: 735, name: '前庭' },
@@ -74,20 +86,13 @@ onMounted(
 function init2() {
   var myChart2 = echarts.init(echart2.value);
   var option2 = {
-    // title: {
-    //   text: '某巡检项目的存有异常的巡检内容分布',
-    //   x: 'center',
-    //   // y: 'bottom'
-    //   // y: 'bottom',
-    //   bottom: '50px'
-    // },
     tooltip: {
       trigger: 'item',
       left: 'left'
     },
     legend: {
       orient: 'vertical',
-      x: 'left',
+      x: '40px',
       y: '30px',
       textStyle: {
         fontWeight: 700,
@@ -97,13 +102,13 @@ function init2() {
       {
         name: 'Access From',
         type: 'pie',
-        center: ['65%','40%'],
+        center: ['75%','40%'],
         radius: '50%',
         data: [
-          { value: 735, name: '违规收费' },
-          { value: 580, name: '未戴安全帽' },
-          { value: 484, name: '打手机' },
-          { value: 300, name: '检修区不规范' }
+          { value: 735, name: '前庭(/xx)内容1' },
+          { value: 580, name: '前庭(/xx)内容2' },
+          { value: 484, name: '前庭(/xx)内容3' },
+          { value: 300, name: '前庭(/xx)内容4' }
         ],
         emphasis: {
           itemStyle: {
@@ -130,10 +135,17 @@ onMounted(
 function init3(){
   var myChart3=echarts.init(echart3.value);
   var option3={
-    title: {
-      text: '存有异常的巡检内容总次数统计',
-      x: 'center',
-      y: 'top',
+    // title: {
+    //   text: '存有异常的巡检内容总次数统计',
+    //   x: 'center',
+    //   y: 'top',
+    // },
+    grid: {
+      // x: '20px',
+      // y:'32px',
+      top: '55px',
+
+      bottom:'15%',
     },
     tooltip: {},
     xAxis: {
@@ -167,10 +179,16 @@ onMounted(
 function init4(){
   var myChart4=echarts.init(echart4.value);
   var option4={
-    title: {
-      text: '某巡检内容出现异常的次数统计',
-      x: 'center',
-      y: 'top',
+    // title: {
+    //   text: '某巡检内容出现异常的次数统计',
+    //   x: 'center',
+    //   y: 'top',
+    // },
+    grid: {
+      // x: '20px',
+      // y:'32px',
+      top: '15px',
+      bottom:'28%',
     },
     tooltip: {},
     xAxis: {
@@ -218,33 +236,60 @@ const options = [
   },
 ]
 
-const valuea = ref('违规收费')
+const valuea = ref('qian')
 const optiona = [
   {
-    value: 'All',
-    label: '违规收费',
+    value: 'qian',
+    label: '前庭',
   },
   {
-    value: 'Option2',
-    label: '未戴安全帽',
+    value: 'bian',
+    label: '便利店',
   },
   {
-    value: 'Option3',
-    label: '打手机',
+    value: 'you',
+    label: '油罐区',
   },
   {
-    value: 'Option4',
-    label: '检修区不规范',
+    value: 'dian',
+    label: '电器设备',
+  },
+  {
+    value: 'huan',
+    label: '环保',
+  },
+]
+const valueb = ref('qian')
+const optionb = [
+  {
+    value: 'qian',
+    label: '前庭',
+  },
+  {
+    value: 'bian',
+    label: '便利店',
+  },
+  {
+    value: 'you',
+    label: '油罐区',
+  },
+  {
+    value: 'dian',
+    label: '电器设备',
+  },
+  {
+    value: 'huan',
+    label: '环保',
   },
 ]
 
 </script>
 
 <template>
-<!--  <div>可视化设计8899</div>-->
-<!--  <div>-->
-<!--    <e-charts class="chart" :option="option" />-->
-<!--  </div>-->
+  <!--  <div>可视化设计8899</div>-->
+  <!--  <div>-->
+  <!--    <e-charts class="chart" :option="option" />-->
+  <!--  </div>-->
   <div class="bodyPagevSL">
 
     <div style="text-align: left; padding-left: 15px;padding-top: 10px;  margin-bottom: 20px">
@@ -269,10 +314,10 @@ const optiona = [
       <svg  width="20" height="20" class="DocSearch-Search-Icon" viewBox="0 0 20 20" size="14px"><path d="M14.386 14.386l4.0877 4.0877-4.0877-4.0877c-2.9418 2.9419-7.7115 2.9419-10.6533 0-2.9419-2.9418-2.9419-7.7115 0-10.6533 2.9418-2.9419 7.7115-2.9419 10.6533 0 2.9419 2.9418 2.9419 7.7115 0 10.6533z" stroke="currentColor" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg>
       </span>
     </div>
-<div>
-  <div style="display: inline-block; width: 50%; text-align: center;float: left;">存有异常的巡检项目分布</div>
-  <div style="display: inline-block; width: 50%; text-align: center">某巡检项目的存有异常的巡检内容分布</div>
-</div>
+    <div>
+      <div class="VL_title" >存有异常的巡检项目分布</div>
+      <div class="VL_title" >某巡检项目的存有异常的巡检内容分布</div>
+    </div>
 
     <div class="box">
       <div style="float: right ; margin-right: 20px; margin-top: 10px">
@@ -281,9 +326,10 @@ const optiona = [
           <el-radio-button label="近七天" />
         </el-radio-group>
       </div>
-      <div class="chart" ref="echart1" style="margin-right: 20px; float: left"></div>
+      <div class="chart" ref="echart1" style="margin-right: 20px; float: right"></div>
 
     </div>
+
 
     <div class="box">
       <div style="float: left; margin-left: 20px; margin-top: 10px; color: #ffde59;">
@@ -312,11 +358,37 @@ const optiona = [
       <div class="chart" ref="echart2" style="float: left"></div>
     </div>
 
-    <div class="box">
-      <div class="chart" ref="echart3" style="margin-right: 20px; float: left"></div>
+    <div>
+      <div class="VL_title" >存有异常的巡检内容总次数统计</div>
+      <div class="VL_title" >某巡检项目出现异常的次数统计</div>
     </div>
+
     <div class="box">
-      <div class="chart" ref="echart4" style=""></div>
+      <div style="float: left; margin-left: 20px; padding-top: 10px; color: #ffde59;">
+      </div>
+      <div class="chart" ref="echart3" style="float: left;width: 95%;"></div>
+    </div>
+    <div class="box" style="">
+      <div style="float: left; margin-left: 20px; padding-top: 10px; color: #ffde59;">
+        <el-select
+            v-model="valueb"
+            class="m-2"
+            placeholder=""
+            size=""
+            style="width: 150px"
+        >
+          <el-option
+              v-for="item in optionb"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+          />
+        </el-select>
+      </div>
+
+      <div class="chart" ref="echart4" style="float: right; width: 95%;"></div>
+
+
     </div>
 
 
@@ -330,25 +402,32 @@ const optiona = [
 
 
 <style scoped>
+/*page {*/
+/*  background-color: #f4f3f3;*/
+/*  height: 100vh;*/
+/*}*/
 .bodyPagevSL {
   background-color: #f4f3f3;
   height: 100vh;
 }
+/*body {*/
+/*  background-color: #f4f3f3;*/
+/*  height: 100vh;*/
+/*}*/
 .chart {
   height: 320px;
   /*!*background-color: #ffffff;*!*/
   width: 85%;
-  /*margin-top: 50px;*/
   /*margin-bottom: 10px;*/
   display: inline-block;
   /*padding-right: -20px;*/
 }
 .box {
-  height: 310px;
+  height: 300px;
   width: 46%;
   background-color: #ffffff;
   display: inline-block;
-  margin: 15px 15px 10px 20px;
+  margin: 10px 15px 10px 20px;
   /*margin-left: 15px;*/
   /*margin-top: 15px;*/
   /*margin-bottom: 10px;*/
@@ -356,5 +435,13 @@ const optiona = [
 }
 .select_item {
   font-size: 14px;
+}
+.VL_title {
+  display: inline-block;
+  width: 50%;
+  text-align: center;
+  font-weight: 700;
+  font-size: 18px;
+  padding-top: 5px
 }
 </style>
