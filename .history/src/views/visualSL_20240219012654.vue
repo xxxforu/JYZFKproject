@@ -409,7 +409,6 @@ const optionb = [
 .bodyPagevSL {
   background-color: #f4f3f3;
   height: 100%;
-  overflow-y: scroll;
 }
 /*body {*/
 /*  background-color: #f4f3f3;*/
@@ -424,7 +423,6 @@ const optionb = [
   /*padding-right: -20px;*/
 }
 .box {
-  min-width: min-content;
   height: 38%;
   width: 46%;
   background-color: #ffffff;

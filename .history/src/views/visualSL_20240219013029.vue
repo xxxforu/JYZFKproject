@@ -409,7 +409,6 @@ const optionb = [
 .bodyPagevSL {
   background-color: #f4f3f3;
   height: 100%;
-  overflow-y: scroll;
 }
 /*body {*/
 /*  background-color: #f4f3f3;*/

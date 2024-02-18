@@ -424,7 +424,8 @@ const optionb = [
   /*padding-right: -20px;*/
 }
 .box {
-  min-width: min-content;
+  min-width: fit-content;
+  min-height: min-content;
   height: 38%;
   width: 46%;
   background-color: #ffffff;

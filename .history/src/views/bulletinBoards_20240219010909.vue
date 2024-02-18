@@ -50,7 +50,6 @@ import NoticeBox from '../components/NoticeBox.vue';
   }
   
   const goSearch =(searchContent)=>{
-    console.log(type.value);
     axios.get('/'+role+'/searchAnnouncement',{
       params:{
         type:type.value,

@@ -1,5 +1,5 @@
 <script setup>
-    import { defineProps, ref } from 'vue';
+    import { ref } from 'vue';
     defineProps(['title','content','type','date'])
     var showContent = ref(false)
     var rotationDegrees = ref(0)

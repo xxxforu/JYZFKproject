@@ -31,6 +31,7 @@ import NoticeBox from '../components/NoticeBox.vue';
 
   // 类别改变
   const handleClick = (tab,event)=>{
+    console.log(event.target.innerText);
     type.value = event.target.innerText=="公告"?1:event.target.innerText=="通知"?2:3;
     
     axios.get('/'+role+'/getAnnouncementList?type='+type.value+'&page='+currentPage.value+'&size=8').then(res=>{
@@ -50,7 +51,6 @@ import NoticeBox from '../components/NoticeBox.vue';
   }
   
   const goSearch =(searchContent)=>{
-    console.log(type.value);
     axios.get('/'+role+'/searchAnnouncement',{
       params:{
         type:type.value,

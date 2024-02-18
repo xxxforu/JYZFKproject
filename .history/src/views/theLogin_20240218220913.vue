@@ -100,7 +100,7 @@
            localStorage.setItem("token",data.token)
            localStorage.setItem("role",data.role)
            localStorage.setItem("belong",data.belong);
-           that.$axios.defaults.headers.common['Authorization']= localStorage.getItem("token")
+           this.$axios.defaults.headers.common['Authorization']= localStorage.getItem("token")
           //  设置好localStorage后再跳转页面
            that.$router.push({path:"/main"})
         })

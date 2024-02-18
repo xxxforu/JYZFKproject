@@ -1,6 +1,7 @@
 <script setup>
     import { defineProps, ref } from 'vue';
-    defineProps(['title','content','type','date'])
+    defineProps(['data'])
+    var type = data.type==1?"公告":data.type==2?"通知":"安全知识普及"
     var showContent = ref(false)
     var rotationDegrees = ref(0)
     function changeShowContent(){
@@ -11,16 +12,15 @@
 
 <template>
   <div class="bigBox">
-    <!-- 本来该处应展示对应公告的接受者，但后端还没写，先简化 -->
-    <view class="kind">{{type==1?"公告":type==2?"通知":"安全知识普及"}}</view>
+    <view class="kind">{{type}}</view>
     <view class="smallBox">
-        <text class="title">{{title}}</text>
+        <text class="title">{{data.title}}</text>
         <transition name="expand">
-            <text v-if="showContent" class="content">{{content}}</text>
+            <text v-if="showContent" class="content">{{data.content}}</text>
         </transition>
         
     </view>
-        <text class="time">{{date}}</text>
+        <text class="time">{{data.createDate}}</text>
         <view @click="changeShowContent"  class="changeShowContent"><svg :style="{ 'transform': `rotate(${rotationDegrees}deg)` }" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" data-v-ea893728=""><path fill="currentColor" d="M104.704 338.752a64 64 0 0 1 90.496 0l316.8 316.8 316.8-316.8a64 64 0 0 1 90.496 90.496L557.248 791.296a64 64 0 0 1-90.496 0L104.704 429.248a64 64 0 0 1 0-90.496z"></path></svg></view>
 
   </div>

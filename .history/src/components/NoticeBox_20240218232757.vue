@@ -1,6 +1,7 @@
 <script setup>
     import { defineProps, ref } from 'vue';
     defineProps(['title','content','type','date'])
+    // var type = data.type==1?"公告":data.type==2?"通知":"安全知识普及"
     var showContent = ref(false)
     var rotationDegrees = ref(0)
     function changeShowContent(){
@@ -11,7 +12,6 @@
 
 <template>
   <div class="bigBox">
-    <!-- 本来该处应展示对应公告的接受者，但后端还没写，先简化 -->
     <view class="kind">{{type==1?"公告":type==2?"通知":"安全知识普及"}}</view>
     <view class="smallBox">
         <text class="title">{{title}}</text>

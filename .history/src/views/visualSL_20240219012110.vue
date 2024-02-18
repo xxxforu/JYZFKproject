@@ -409,14 +409,13 @@ const optionb = [
 .bodyPagevSL {
   background-color: #f4f3f3;
   height: 100%;
-  overflow-y: scroll;
 }
 /*body {*/
 /*  background-color: #f4f3f3;*/
 /*  height: 100vh;*/
 /*}*/
 .chart {
-  height: 100%;
+  height: 320px;
   /*!*background-color: #ffffff;*!*/
   width: 85%;
   /*margin-bottom: 10px;*/
@@ -424,8 +423,7 @@ const optionb = [
   /*padding-right: -20px;*/
 }
 .box {
-  min-width: min-content;
-  height: 38%;
+  height: 300px;
   width: 46%;
   background-color: #ffffff;
   display: inline-block;

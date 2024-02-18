@@ -21,7 +21,7 @@ import NoticeBox from '../components/NoticeBox.vue';
       ableAnnounce.value = true
     }
     // 一进页面就调接口
-    axios.get('/'+role+'/getAnnouncementList?type=1&page='+currentPage.value+'&size=8').then(res=>{
+    axios.get('/'+role.value+'/getAnnouncementList?type=1&page='+currentPage.value+'&size=8').then(res=>{
         // console.log(res.data);
         annoucementList.value = res.data.data.data
         lastPage.value=res.data.data.lastPage*10
@@ -33,7 +33,7 @@ import NoticeBox from '../components/NoticeBox.vue';
   const handleClick = (tab,event)=>{
     type.value = event.target.innerText=="公告"?1:event.target.innerText=="通知"?2:3;
     
-    axios.get('/'+role+'/getAnnouncementList?type='+type.value+'&page='+currentPage.value+'&size=8').then(res=>{
+    axios.get('/'+role.value+'/getAnnouncementList?type='+type.value+'&page='+currentPage.value+'&size=8').then(res=>{
         annoucementList.value = res.data.data.data
         lastPage.value=res.data.data.lastPage*10
     })
@@ -43,27 +43,14 @@ import NoticeBox from '../components/NoticeBox.vue';
   // 点击分页条
   const handleChangePage = (value)=>{
     currentPage.value = value
-    axios.get('/'+role+'/getAnnouncementList?type='+type.value+'&page='+currentPage.value+'&size=8').then(res=>{
+    axios.get('/'+role.value+'/getAnnouncementList?type='+type.value+'&page='+currentPage.value+'&size=8').then(res=>{
         annoucementList.value = res.data.data.data
         lastPage.value=res.data.data.lastPage*10
     })
   }
   
   const goSearch =(searchContent)=>{
-    console.log(type.value);
-    axios.get('/'+role+'/searchAnnouncement',{
-      params:{
-        type:type.value,
-        keyWord:searchContent,
-        page:1,
-        size:8
-      }
-    }).then(res=>{
-      console.log(res.data.data.data);
-      annoucementList.value = res.data.data.data
-      lastPage.value=res.data.data.lastPage*10
-      currentPage.value = 1
-    })
+    axios.get('/'+role.value+'/searchAnnouncement')
   }
 
   // 转去发布公告页面
@@ -80,7 +67,7 @@ import NoticeBox from '../components/NoticeBox.vue';
     <el-input
         v-model="search"
         class="w-50 m-2"
-        placeholder="搜索当前类别主题 / 内容"
+        placeholder="搜索主题 / 内容"
         :prefix-icon="Search"
         clearable
         @change="goSearch"
@@ -146,25 +133,6 @@ import NoticeBox from '../components/NoticeBox.vue';
             class="mt-4"
           />
         </el-tab-pane>
-        <!-- <el-tab-pane label="搜索" name="search" v-if="showSearch" >
-          <NoticeBox
-            v-for="item in annoucementList"
-            :key="item.id"
-            :content="item.content"
-            :title="item.tittle"
-            :type="item.type"
-            :date="item.createDate"
-          />
-          <el-pagination
-            v-if="lastPage > 1"
-            hide-on-single-page
-            small
-            background
-            layout="prev, pager, next"
-            :total="lastPage"
-            class="mt-4"
-          />
-        </el-tab-pane> -->
       </el-tabs>
       
   </div>

@@ -406,10 +406,12 @@ const optionb = [
 /*  background-color: #f4f3f3;*/
 /*  height: 100vh;*/
 /*}*/
+canvas{
+  background-color: aqua;
+}
 .bodyPagevSL {
   background-color: #f4f3f3;
   height: 100%;
-  overflow-y: scroll;
 }
 /*body {*/
 /*  background-color: #f4f3f3;*/
@@ -424,8 +426,7 @@ const optionb = [
   /*padding-right: -20px;*/
 }
 .box {
-  min-width: min-content;
-  height: 38%;
+  height: 30%;
   width: 46%;
   background-color: #ffffff;
   display: inline-block;

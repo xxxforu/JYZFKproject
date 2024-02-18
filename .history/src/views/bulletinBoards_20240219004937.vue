@@ -50,20 +50,7 @@ import NoticeBox from '../components/NoticeBox.vue';
   }
   
   const goSearch =(searchContent)=>{
-    console.log(type.value);
-    axios.get('/'+role+'/searchAnnouncement',{
-      params:{
-        type:type.value,
-        keyWord:searchContent,
-        page:1,
-        size:8
-      }
-    }).then(res=>{
-      console.log(res.data.data.data);
-      annoucementList.value = res.data.data.data
-      lastPage.value=res.data.data.lastPage*10
-      currentPage.value = 1
-    })
+    console.log(searchContent);
   }
 
   // 转去发布公告页面
@@ -80,7 +67,7 @@ import NoticeBox from '../components/NoticeBox.vue';
     <el-input
         v-model="search"
         class="w-50 m-2"
-        placeholder="搜索当前类别主题 / 内容"
+        placeholder="搜索主题 / 内容"
         :prefix-icon="Search"
         clearable
         @change="goSearch"
@@ -146,25 +133,6 @@ import NoticeBox from '../components/NoticeBox.vue';
             class="mt-4"
           />
         </el-tab-pane>
-        <!-- <el-tab-pane label="搜索" name="search" v-if="showSearch" >
-          <NoticeBox
-            v-for="item in annoucementList"
-            :key="item.id"
-            :content="item.content"
-            :title="item.tittle"
-            :type="item.type"
-            :date="item.createDate"
-          />
-          <el-pagination
-            v-if="lastPage > 1"
-            hide-on-single-page
-            small
-            background
-            layout="prev, pager, next"
-            :total="lastPage"
-            class="mt-4"
-          />
-        </el-tab-pane> -->
       </el-tabs>
       
   </div>

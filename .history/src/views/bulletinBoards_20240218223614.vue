@@ -9,64 +9,30 @@ import NoticeBox from '../components/NoticeBox.vue';
   var search = ref('')
   var activeName = ref('announcement')
   var ableAnnounce = ref(false) //是否有权限发布通知
-  var annoucementList = ref([]) //当前页面需要渲染的通知详情数组，用于传参给组件NoticeBox
-  var currentPage=ref(1) //当前页，用于接口传参
-  var lastPage = ref(0) //最后一页，用于分页条
-  var type = ref(0) //当前查看的类别
+  var annoucementList = []
   // role语句还需等待后端写好加油站获取通知接口后再完善
   var role = localStorage.getItem("role")==1?"central":"branch";
-
   onMounted(()=>{
     if(role=="central"||role=="branch"){//总/分公司管理员，那就可以发布通知
       ableAnnounce.value = true
     }
-    // 一进页面就调接口
-    axios.get('/'+role+'/getAnnouncementList?type=1&page='+currentPage.value+'&size=8').then(res=>{
+    axios.get('/'+role+'/getAnnouncementList?type=1&page=1&size=8').then(res=>{
         // console.log(res.data);
         annoucementList.value = res.data.data.data
-        lastPage.value=res.data.data.lastPage*10
-      })
+    })
   
   })
-
-  // 类别改变
   const handleClick = (tab,event)=>{
-    type.value = event.target.innerText=="公告"?1:event.target.innerText=="通知"?2:3;
+    var type = event.target.innerText=="公告"?1:event.target.innerText=="通知"?2:3;
     
-    axios.get('/'+role+'/getAnnouncementList?type='+type.value+'&page='+currentPage.value+'&size=8').then(res=>{
+    axios.get('/'+role+'/getAnnouncementList?type='+type+'&page=1&size=8').then(res=>{
+        // console.log(res.data.data.data);
         annoucementList.value = res.data.data.data
-        lastPage.value=res.data.data.lastPage*10
     })
 
-  }
-
-  // 点击分页条
-  const handleChangePage = (value)=>{
-    currentPage.value = value
-    axios.get('/'+role+'/getAnnouncementList?type='+type.value+'&page='+currentPage.value+'&size=8').then(res=>{
-        annoucementList.value = res.data.data.data
-        lastPage.value=res.data.data.lastPage*10
-    })
   }
   
-  const goSearch =(searchContent)=>{
-    console.log(type.value);
-    axios.get('/'+role+'/searchAnnouncement',{
-      params:{
-        type:type.value,
-        keyWord:searchContent,
-        page:1,
-        size:8
-      }
-    }).then(res=>{
-      console.log(res.data.data.data);
-      annoucementList.value = res.data.data.data
-      lastPage.value=res.data.data.lastPage*10
-      currentPage.value = 1
-    })
-  }
 
-  // 转去发布公告页面
   const toAnnounceBulletin =()=>{
     router.push({
       path:'/main/announceBulletin'
@@ -80,91 +46,47 @@ import NoticeBox from '../components/NoticeBox.vue';
     <el-input
         v-model="search"
         class="w-50 m-2"
-        placeholder="搜索当前类别主题 / 内容"
+        placeholder="搜索主题 / 内容"
         :prefix-icon="Search"
         clearable
-        @change="goSearch"
       />
     <el-tabs v-model="activeName" class="demo-tabs" @tab-click="handleClick">
       
         <el-tab-pane label="公告" name="announcement">
-          <NoticeBox
-            v-for="item in annoucementList"
-            :key="item.id"
-            :content="item.content"
-            :title="item.tittle"
-            :type="item.type"
-            :date="item.createDate"
-          />
+          <div v-for="item in annoucementList">
+              <NoticeBox :data=item />
+          </div>
           <el-pagination
-            v-if="lastPage > 1"
             hide-on-single-page
             small
             background
             layout="prev, pager, next"
-            :total="lastPage"
+            :total="40"
             class="mt-4"
-            @current-change="handleChangePage"
           />
         </el-tab-pane>
         <el-tab-pane label="通知" name="notice">
-          <NoticeBox
-            v-for="item in annoucementList"
-            :key="item.id"
-            :content="item.content"
-            :title="item.tittle"
-            :type="item.type"
-            :date="item.createDate"
-          />
+          <NoticeBox /><NoticeBox /><NoticeBox />
           <el-pagination
-            v-if="lastPage > 1"
             hide-on-single-page
             small
             background
             layout="prev, pager, next"
-            :total="lastPage"
+            :total="50"
             class="mt-4"
-            @current-change="handleChangePage"
           />
         </el-tab-pane>
         <el-tab-pane label="安全知识普及" name="popularize">
-          <NoticeBox
-            v-for="item in annoucementList"
-            :key="item.id"
-            :content="item.content"
-            :title="item.tittle"
-            :type="item.type"
-            :date="item.createDate"
-          />
+          <NoticeBox /><NoticeBox />
           <el-pagination
-            v-if="lastPage > 1"
             hide-on-single-page
             small
             background
             layout="prev, pager, next"
-            :total="lastPage"
+            :total="50"
             class="mt-4"
           />
         </el-tab-pane>
-        <!-- <el-tab-pane label="搜索" name="search" v-if="showSearch" >
-          <NoticeBox
-            v-for="item in annoucementList"
-            :key="item.id"
-            :content="item.content"
-            :title="item.tittle"
-            :type="item.type"
-            :date="item.createDate"
-          />
-          <el-pagination
-            v-if="lastPage > 1"
-            hide-on-single-page
-            small
-            background
-            layout="prev, pager, next"
-            :total="lastPage"
-            class="mt-4"
-          />
-        </el-tab-pane> -->
       </el-tabs>
       
   </div>

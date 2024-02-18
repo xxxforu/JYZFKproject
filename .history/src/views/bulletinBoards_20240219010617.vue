@@ -12,6 +12,7 @@ import NoticeBox from '../components/NoticeBox.vue';
   var annoucementList = ref([]) //当前页面需要渲染的通知详情数组，用于传参给组件NoticeBox
   var currentPage=ref(1) //当前页，用于接口传参
   var lastPage = ref(0) //最后一页，用于分页条
+  var showSearch = ref(false)
   var type = ref(0) //当前查看的类别
   // role语句还需等待后端写好加油站获取通知接口后再完善
   var role = localStorage.getItem("role")==1?"central":"branch";
@@ -50,7 +51,6 @@ import NoticeBox from '../components/NoticeBox.vue';
   }
   
   const goSearch =(searchContent)=>{
-    console.log(type.value);
     axios.get('/'+role+'/searchAnnouncement',{
       params:{
         type:type.value,
@@ -62,6 +62,7 @@ import NoticeBox from '../components/NoticeBox.vue';
       console.log(res.data.data.data);
       annoucementList.value = res.data.data.data
       lastPage.value=res.data.data.lastPage*10
+      showSearch.value = true
       currentPage.value = 1
     })
   }
@@ -80,7 +81,7 @@ import NoticeBox from '../components/NoticeBox.vue';
     <el-input
         v-model="search"
         class="w-50 m-2"
-        placeholder="搜索当前类别主题 / 内容"
+        placeholder="搜索主题 / 内容"
         :prefix-icon="Search"
         clearable
         @change="goSearch"
@@ -146,7 +147,7 @@ import NoticeBox from '../components/NoticeBox.vue';
             class="mt-4"
           />
         </el-tab-pane>
-        <!-- <el-tab-pane label="搜索" name="search" v-if="showSearch" >
+        <el-tab-pane label="搜索" name="search" v-if="showSearch" >
           <NoticeBox
             v-for="item in annoucementList"
             :key="item.id"
@@ -164,7 +165,7 @@ import NoticeBox from '../components/NoticeBox.vue';
             :total="lastPage"
             class="mt-4"
           />
-        </el-tab-pane> -->
+        </el-tab-pane>
       </el-tabs>
       
   </div>
