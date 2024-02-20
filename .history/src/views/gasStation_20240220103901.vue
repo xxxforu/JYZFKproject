@@ -8,10 +8,7 @@ var isCentral = ref(true)
 var tableData = ref([])
 var branchNum = ref(0)
 var stationNum = ref(0)
-const dialogVisible = ref(false) //修改弹窗
-const addDialogVisible = ref(false)
-const centerDialogVisible = ref(false) //删除弹窗
-var deletePid = 0
+const dialogVisible = ref(false)
 const form = ref({
   pid:0,
   petrolName:"",
@@ -20,15 +17,11 @@ const form = ref({
   serviceTel:"",
   principal:""
 })
-const addForm = ref({
-  petrolName:"",
-  petrolLocation:"",
-  belongCompany:undefined,
-  serviceTel:"",
-  principal:""
-})
-const getPList =()=>{
-  axios.get('/central/petrolList').then(res=>{
+onMounted(()=>{
+  if(role==1){
+    havaRightToCheck.value=true
+    isCentral.value=true
+    axios.get('/central/petrolList').then(res=>{
       tableData.value = res.data.data.petrolList
       // tableData.value = tableData.value.concat(tableData.value)
       // tableData.value = tableData.value.concat(tableData.value)
@@ -37,12 +30,6 @@ const getPList =()=>{
     axios.get('/central/companyList').then(res=>{
       branchNum.value = res.data.data.length
     })
-}
-onMounted(()=>{
-  if(role==1){
-    havaRightToCheck.value=true
-    isCentral.value=true
-    getPList()
     
   }else if(role == 2){
     havaRightToCheck.value=true
@@ -56,67 +43,29 @@ onMounted(()=>{
     isCentral.value=false
   }
 })
-const handleEdit = (index, row) =>{
+const handleEdit = (index, row) => {
+  // 把当前form表单内容填充为选择加油站的信息
   form.value = row
   dialogVisible.value = true
 }
 const handleDelete = (index, row) => {
   console.log(index, row)
-  deletePid = row.pid
-  centerDialogVisible.value = true
+  
 }
-
-// 修改加油站
 const updatePetrol =()=>{
   dialogVisible.value = false,
 
   axios.put('/branch/updatePetrol',form.value).then(res=>{
     console.log(res);
     // 如果成功就提示
-    if(res.data.code==0) ElMessage({
-    message: '修改成功！',
+    if(res.code==0) ElMessage({
+    message: '发布成功！',
     type: 'success',
   })
     
   })
 }
 
-// 删除加油站
-const deletePetrol =()=>{
-  centerDialogVisible.value = false
-  axios.delete('/branch/deletePetrol/'+deletePid).then(res=>{
-    console.log(res);
-    if(res.data.code==0){
-      getPList()
-    }
-  })
-}
-
-// 新增加油站
-const addPetrol =()=>{
-  addDialogVisible.value = false
-  
-  addForm.value.belongCompany = parseInt(addForm.value.belongCompany)
-  var config = {
-   method: 'post',
-   url: 'http://111.230.198.4:7001/api/branch/addPetrol',
-   headers: { 
-      'Authorization': localStorage.getItem('token'), 
-      'User-Agent': 'Apifox/1.0.0 (https://www.apifox.cn)', 
-      'Content-Type': 'application/json', 
-      'Accept': '*/*', 
-      'Host': '111.230.198.4:7001', 
-      'Connection': 'keep-alive'
-   },
-   data : JSON.stringify(addForm.value)
-};
-  axios(config).then(res=>{
-    console.log(res);
-    if(res.data.code==0){
-      getPList()
-    }
-  })
-}
 </script>
 
 <template>
@@ -150,8 +99,9 @@ const addPetrol =()=>{
         </el-table-column>
       </el-table>
     </div>
-    <el-button class="el-button el-button-small" id="addStation" size="small" @click="addDialogVisible= true">新增</el-button
-          >
+    <button id="addStation">
+      新增
+    </button>
 
     <!-- 修改加油站资料的弹窗 -->
     <el-dialog
@@ -183,62 +133,15 @@ const addPetrol =()=>{
     <template #footer>
       <div class="dialog-footer">
         <el-button @click="dialogVisible = false">取消</el-button>
-        <el-button type="primary"  @click="updatePetrol">
+        <el-button type="primary" @click="updatePetrol">
           确认修改
-        </el-button>
-      </div>
-    </template>
-  </el-dialog>
-  <!-- 添加加油站的弹窗 -->
-  <el-dialog
-    v-model="addDialogVisible"
-    title="添加加油站"
-    width="500"
-  >
-  <el-form :model="addForm" label-width="auto" :label-position="left">
-    <el-form-item label="名称">
-      <el-input v-model="addForm.petrolName" placeholder="填写加油站名称" />
-    </el-form-item>
-    <el-form-item label="地址">
-      <el-input v-model="addForm.petrolLocation"  placeholder="填写加油站地址" />
-    </el-form-item>
-    <el-form-item label="所属分公司">
-      <el-input v-model="addForm.belongCompany"  placeholder="填写加油站所属分公司编号" />
-    </el-form-item>
-    <el-form-item label="联系电话">
-      <el-input v-model="addForm.serviceTel" placeholder="填写加油站联系电话" />
-    </el-form-item>
-    <el-form-item label="负责人">
-      <el-input v-model="addForm.principal" placeholder="填写加油站负责人" />
-    </el-form-item>
-  </el-form>
-
-    <template #footer>
-      <div class="dialog-footer">
-        <el-button @click="addDialogVisible = false">取消</el-button>
-        <el-button type="primary"  @click="addPetrol">
-          确认添加
-        </el-button>
-      </div>
-    </template>
-  </el-dialog>
-  <!-- 删除加油站的弹窗 -->
-  <el-dialog v-model="centerDialogVisible" title="提示" width="500" center>
-    <span>
-      您现在正在进行加油站删除操作，请问是否确认？
-    </span>
-    <template #footer>
-      <div class="dialog-footer">
-        <el-button @click="centerDialogVisible = false">取消</el-button>
-        <el-button type="primary" @click="deletePetrol">
-          确认删除
         </el-button>
       </div>
     </template>
   </el-dialog>
   </div>
   <div id="lock" v-else>
-    <el-empty description="无权限该内容" />
+    <el-empty description="您无须填写该内容" />
   </div>
 
 </template>
@@ -273,16 +176,16 @@ const addPetrol =()=>{
 }
 #addStation{
   float: right;
-  margin-right: 7%;
-  padding:10px 15px;
+  margin-right: 5%;
+  padding:2px 7px;
+}
+.listBox .el-table__header{
+  background-color: aqua !important;
 }
 .countBox {
   padding: 15px 30px;
   border-radius: 5px;
   background-color: #fff;
-}
-.countBox span{
-  color: var(--el-color-primary);
 }
 h3{
   text-align: center;

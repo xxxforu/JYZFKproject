@@ -276,6 +276,9 @@ const addPetrol =()=>{
   margin-right: 7%;
   padding:10px 15px;
 }
+.listBox .el-table__header{
+  background-color: aqua !important;
+}
 .countBox {
   padding: 15px 30px;
   border-radius: 5px;

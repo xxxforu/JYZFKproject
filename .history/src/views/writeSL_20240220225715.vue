@@ -54,29 +54,44 @@ day.value = currentDate.getDate(); // 获取日期
                     </el-radio-group>
                   </div>
                 </el-table-column>
-                <el-table-column prop="checkTime9" label="9时" width="210">
-                  <div class="my-2 flex items-center text-sm" style="display:flex;">
-                    <el-radio-group v-model="radio2" class="ml-4">
-                      <el-radio label="1">Option 1</el-radio>
-                      <el-radio label="2">Option 2</el-radio>
-                    </el-radio-group>
-                  </div>
+                <el-table-column prop="checkTime9" label="9时" width="120">
+                <template #default="scope">
+                  <el-button size="small" @click="handleEdit(scope.$index, scope.row)"
+                    >修改</el-button
+                  >
+                  <el-button
+                    size="small"
+                    type="danger"
+                    @click="handleDelete(scope.$index, scope.row)"
+                    >删除</el-button
+                  >
+                </template>
                 </el-table-column>
-                <el-table-column prop="checkTime17" label="17时" width="210">
-                  <div class="my-2 flex items-center text-sm" style="display:flex;">
-                    <el-radio-group v-model="radio2" class="ml-4">
-                      <el-radio label="1">Option 1</el-radio>
-                      <el-radio label="2">Option 2</el-radio>
-                    </el-radio-group>
-                  </div>
+                <el-table-column prop="checkTime17" label="17时" width="120">
+                  <template #default="scope">
+                    <el-button size="small" @click="handleEdit(scope.$index, scope.row)"
+                      >修改</el-button
+                    >
+                    <el-button
+                      size="small"
+                      type="danger"
+                      @click="handleDelete(scope.$index, scope.row)"
+                      >删除</el-button
+                    >
+                  </template>
                 </el-table-column>
-                <el-table-column prop="checkTime23" label="23时" width="210">
-                  <div class="my-2 flex items-center text-sm" style="display:flex;">
-                    <el-radio-group v-model="radio2" class="ml-4">
-                      <el-radio label="1">Option 1</el-radio>
-                      <el-radio label="2">Option 2</el-radio>
-                    </el-radio-group>
-                  </div>
+                <el-table-column prop="checkTime23" label="23时" width="120">
+                    <template #default="scope">
+                      <el-button size="small" @click="handleEdit(scope.$index, scope.row)"
+                        >修改</el-button
+                      >
+                      <el-button
+                        size="small"
+                        type="danger"
+                        @click="handleDelete(scope.$index, scope.row)"
+                        >删除</el-button
+                      >
+                    </template>
                 </el-table-column>
               </el-table-column>
             </el-table>

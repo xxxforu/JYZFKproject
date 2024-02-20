@@ -238,7 +238,7 @@ const addPetrol =()=>{
   </el-dialog>
   </div>
   <div id="lock" v-else>
-    <el-empty description="无权限该内容" />
+    <el-empty description="您无须填写该内容" />
   </div>
 
 </template>
@@ -273,16 +273,16 @@ const addPetrol =()=>{
 }
 #addStation{
   float: right;
-  margin-right: 7%;
+  margin-right: 5%;
   padding:10px 15px;
+}
+.listBox .el-table__header{
+  background-color: aqua !important;
 }
 .countBox {
   padding: 15px 30px;
   border-radius: 5px;
   background-color: #fff;
-}
-.countBox span{
-  color: var(--el-color-primary);
 }
 h3{
   text-align: center;

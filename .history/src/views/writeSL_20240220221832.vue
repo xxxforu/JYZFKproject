@@ -7,21 +7,12 @@ var activeName = ref('vestibule')
 var year = ref(); // 获取年份
 var month = ref(); // 注意：月份从 0 开始，需要加 1
 var day = ref(); // 获取日期
-var SLData=ref({
-  vestibule:[
-    {
-      num:"1",
-      checkContent:"员工形象",
-      checkStandard:"员工形象、劳动纪律符合规定"
-    }
-  ]
-})
 onMounted(()=>{
   if(role==3){
     havaRightToCheck.value=true
     
   }else{
-    havaRightToCheck.value=false
+    havaRightToCheck.value=true
   }
   let currentDate = new Date();
 
@@ -39,49 +30,30 @@ day.value = currentDate.getDate(); // 获取日期
     <div id="navSearchBar">
         <div id="date"><span>日期： </span>{{year}}年{{month}}月{{day}}日</div>
       <el-tabs v-model="activeName" class="demo-tabs" @tab-click="handleClick">
-        <div class="SLbox">
+        
           <el-tab-pane label="前庭" name="vestibule">
-            <el-table stripe :data="SLData.vestibule" style="width: 100%;height:100%">
-              <el-table-column prop="num" label="序号" width="80" />
-              <el-table-column prop="checkContent" label="巡检内容" width="120" />
-              <el-table-column prop="checkStandard" label="检查标准" width="220" />
-              <el-table-column label="检查时间及结果">
-                <el-table-column prop="checkTime4" label="4时" width="210">
-                  <div class="my-2 flex items-center text-sm" style="display:flex;">
-                    <el-radio-group v-model="radio2" class="ml-4">
-                      <el-radio label="1">Option 1</el-radio>
-                      <el-radio label="2">Option 2</el-radio>
-                    </el-radio-group>
-                  </div>
-                </el-table-column>
-                <el-table-column prop="checkTime9" label="9时" width="210">
-                  <div class="my-2 flex items-center text-sm" style="display:flex;">
-                    <el-radio-group v-model="radio2" class="ml-4">
-                      <el-radio label="1">Option 1</el-radio>
-                      <el-radio label="2">Option 2</el-radio>
-                    </el-radio-group>
-                  </div>
-                </el-table-column>
-                <el-table-column prop="checkTime17" label="17时" width="210">
-                  <div class="my-2 flex items-center text-sm" style="display:flex;">
-                    <el-radio-group v-model="radio2" class="ml-4">
-                      <el-radio label="1">Option 1</el-radio>
-                      <el-radio label="2">Option 2</el-radio>
-                    </el-radio-group>
-                  </div>
-                </el-table-column>
-                <el-table-column prop="checkTime23" label="23时" width="210">
-                  <div class="my-2 flex items-center text-sm" style="display:flex;">
-                    <el-radio-group v-model="radio2" class="ml-4">
-                      <el-radio label="1">Option 1</el-radio>
-                      <el-radio label="2">Option 2</el-radio>
-                    </el-radio-group>
-                  </div>
-                </el-table-column>
+            <el-table stripe :data="tableData" style="width: 100%;height:100%">
+              <el-table-column prop="pid" label="编号" width="120" />
+              <el-table-column prop="petrolName" label="名称" width="120" />
+              <el-table-column prop="petrolLocation" label="地址" width="180" />
+              <el-table-column v-if="isCentral" prop="belongCompany" label="所属分公司" width="120" />
+              <el-table-column prop="principal" label="负责人" width="120" />
+              <el-table-column prop="serviceTel" label="联系电话" width="180" />
+              <el-table-column prop="action" label="操作" width="180">
+              <template #default="scope">
+                <el-button size="small" @click="handleEdit(scope.$index, scope.row)"
+                  >修改</el-button
+                >
+                <el-button
+                  size="small"
+                  type="danger"
+                  @click="handleDelete(scope.$index, scope.row)"
+                  >删除</el-button
+                >
+              </template>
               </el-table-column>
             </el-table>
           </el-tab-pane>
-        </div>
           <el-tab-pane label="营业室/便利店" name="store">
             
           </el-tab-pane>
@@ -208,9 +180,5 @@ right: 5%;
 }
 #date span{
   font-weight: normal;
-}
-.SLbox{
-  width: fit-content;
-  margin: 0 auto 0;
 }
 </style>

@@ -56,10 +56,6 @@ onMounted(()=>{
     isCentral.value=false
   }
 })
-const handleEdit = (index, row) =>{
-  form.value = row
-  dialogVisible.value = true
-}
 const handleDelete = (index, row) => {
   console.log(index, row)
   deletePid = row.pid
@@ -95,27 +91,7 @@ const deletePetrol =()=>{
 // 新增加油站
 const addPetrol =()=>{
   addDialogVisible.value = false
-  
-  addForm.value.belongCompany = parseInt(addForm.value.belongCompany)
-  var config = {
-   method: 'post',
-   url: 'http://111.230.198.4:7001/api/branch/addPetrol',
-   headers: { 
-      'Authorization': localStorage.getItem('token'), 
-      'User-Agent': 'Apifox/1.0.0 (https://www.apifox.cn)', 
-      'Content-Type': 'application/json', 
-      'Accept': '*/*', 
-      'Host': '111.230.198.4:7001', 
-      'Connection': 'keep-alive'
-   },
-   data : JSON.stringify(addForm.value)
-};
-  axios(config).then(res=>{
-    console.log(res);
-    if(res.data.code==0){
-      getPList()
-    }
-  })
+  console.log(addForm.value);
 }
 </script>
 
@@ -150,8 +126,9 @@ const addPetrol =()=>{
         </el-table-column>
       </el-table>
     </div>
-    <el-button class="el-button el-button-small" id="addStation" size="small" @click="addDialogVisible= true">新增</el-button
-          >
+    <button id="addStation" @click="addDialogVisible= true">
+      新增
+    </button>
 
     <!-- 修改加油站资料的弹窗 -->
     <el-dialog
@@ -203,7 +180,7 @@ const addPetrol =()=>{
       <el-input v-model="addForm.petrolLocation"  placeholder="填写加油站地址" />
     </el-form-item>
     <el-form-item label="所属分公司">
-      <el-input v-model="addForm.belongCompany"  placeholder="填写加油站所属分公司编号" />
+      <el-input v-model="addForm.belongCompany"  placeholder="填写加油站所属分公司" />
     </el-form-item>
     <el-form-item label="联系电话">
       <el-input v-model="addForm.serviceTel" placeholder="填写加油站联系电话" />
@@ -238,7 +215,7 @@ const addPetrol =()=>{
   </el-dialog>
   </div>
   <div id="lock" v-else>
-    <el-empty description="无权限该内容" />
+    <el-empty description="您无须填写该内容" />
   </div>
 
 </template>
@@ -273,16 +250,16 @@ const addPetrol =()=>{
 }
 #addStation{
   float: right;
-  margin-right: 7%;
-  padding:10px 15px;
+  margin-right: 5%;
+  padding:2px 7px;
+}
+.listBox .el-table__header{
+  background-color: aqua !important;
 }
 .countBox {
   padding: 15px 30px;
   border-radius: 5px;
   background-color: #fff;
-}
-.countBox span{
-  color: var(--el-color-primary);
 }
 h3{
   text-align: center;
