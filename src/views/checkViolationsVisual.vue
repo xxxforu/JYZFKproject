@@ -5,6 +5,27 @@ import {ref, onMounted} from 'vue';
 // import { useRoute } from 'vue-router'
 
 import * as echarts from "echarts";
+ var role = localStorage.getItem('role')
+ var belong = localStorage.getItem('belong')
+ var isCompany = ref(true)
+ var isCentral = ref(true)
+
+ onMounted(()=>{
+   if(role==3){
+     isCompany.value=true
+   }else {
+     isCompany=false
+     if (role==1){
+       //总：可选分公司查看？
+       isCentral=true
+     }else {
+       //分：可选加油站查看
+       isCentral=false
+     }
+   }
+
+ })
+
 
 const radio1 = ref('1')
 
@@ -35,10 +56,10 @@ const radio1 = ref('1')
  //!图一数据 ||缺少判断是哪个加油站/分公司
  const eInfo1 =ref([])
  axios.get('http://127.0.0.1:4523/m1/3942191-0-default/central/getPetrolIllegalBehavior?flag=1').then(res => {
-   eInfo1.value= res.data
+   eInfo1.value= res.data.data
    console.log(res.data);
-
-   console.log(eInfo1.value.data.checking)
+  console.log(eInfo1.value)
+   console.log(eInfo1.value.checking)
    //  checking = eInfo1.value.data.checking
    // phone = eInfo1.value.data.phone
    // work = eInfo1.value.data.work

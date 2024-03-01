@@ -1,9 +1,18 @@
 <!--安全日志查看_列表查看-->
 <script setup>
 
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
 import { useRouter } from "vue-router"
 import axios from "axios";  // 引入userRouter
+var role = localStorage.getItem('role')
+
+var isCompany = ref(true)
+var isCentral = ref(false)
+var isBranch = ref(false)
+var isPetrol = ref(false)
+
+var total = ref(0)
+var lastPage = ref(1)
 
 const Info =ref([])
 axios.get(' http://127.0.0.1:4523/m1/3942191-0-default/branch/getSafeDailyList?page=1&size=5').then(res => {
@@ -34,9 +43,10 @@ const optiona = [
   },
 ]
 
+var data = ref([])
+var tableData = ref([])
 
-
-const tableData = [
+const tableData2 = [
   {
     date: '2099-03-03',
     name: 'xxx',
@@ -85,6 +95,34 @@ const tableData = [
   },
 
 ]
+onMounted(()=>{
+  if(role==1){
+    isCentral.value=true
+    isCompany.value=true
+    axios.get('/branch/getSafeDailyList?companyId=7710&date=2024-02-04').then(res=>{
+      tableData.value = res.data.data
+    })
+  }else if(role==2){
+    isBranch.value=true
+    isCompany.value=true
+    axios.get('/branch/getSafeDailyList?companyId=7710&date=2024-02-04').then(res=>{//分公司的companyId为其分公司编号，是固定的
+      tableData.value = res.data.data
+      total.value=res.data.data.total
+    })
+  }else {
+    isPetrol.value=true
+    isCompany.value=false
+    axios.get('/petrol/getPetrolSafeDailyList?page=1&size=2').then(res=>{
+      tableData.value = res.data.data.data
+     // tableData.value = data.
+      total.value=res.data.data.total
+      lastPage.value=res.data.data.lastPage
+      console.log(res.data.data.data)
+      console.log(tableData.value)
+    })
+  }
+
+})
 
 
 const size = ref<'default' | 'large' | 'small'>('default')
@@ -99,7 +137,24 @@ function handleClick() {
     path:'/main/visualSL'
   })
 }
-
+// function formatter1(row){
+//   let arr = []
+//   row.contentChecking((item,index)=>{
+//     if()
+//   })
+//
+// }
+// const formatter1 = (row, column, cellValue) => {
+//   //return row.illegalType=='1'?'是':'否'
+//   let c = row.contentChecking
+//   if(c.getElementById('1') == '1'){
+//     return '打手机'
+//   }else{
+//     return '违规收费'
+//   }
+//
+//
+// }
 
 
 
@@ -107,7 +162,7 @@ function handleClick() {
 </script>
 
 <template>
-  <div class="bodyPagelSL">
+  <div class="bodyPagelSL" v-if="isCompany">
 
 
     <div style="font-size: 18px; font-weight: 700; text-align: left;padding-top: 20px;padding-left: 30px; margin-bottom: 10px">列表查看</div>
@@ -144,16 +199,16 @@ function handleClick() {
 
       </div>
     </div>
-    <div class="mainBody">
+    <div class="tmainBody">
       <el-table :data="tableData" style="width: 100%">
-        <el-table-column prop="name" label="加油站编号" width="250" />
+        <el-table-column prop="pid" label="加油站编号" width="250" />
         <el-table-column prop="date" label="时间" width="120" />
         <el-table-column label="巡检项目">
-          <el-table-column prop="qian" label="前庭" width="120" />
-          <el-table-column prop="bian" label="便利店" width="120" />
-          <el-table-column prop="you" label="油罐区" width="120" />
-          <el-table-column prop="dian" label="电器设备" width="120" />
-          <el-table-column prop="huan" label="环保" width="120" />
+          <el-table-column prop="qian" label="前庭" width="120" :formatter="formatter" />
+          <el-table-column prop="bian" label="便利店" width="120" :formatter="formatter" />
+          <el-table-column prop="you" label="油罐区" width="120" :formatter="formatter" />
+          <el-table-column prop="dian" label="电器设备" width="120" :formatter="formatter" />
+          <el-table-column prop="huan" label="环保" width="120" :formatter="formatter" />
 
           <el-table-column prop="links" label="" width="120px">
             <template #header>
@@ -182,7 +237,51 @@ function handleClick() {
           <!--            layout="prev, pager, next"-->
           <!--            :total="1000"-->
           <!--        />-->
-          <el-pagination background layout="prev, pager, next" :total="1000" />
+          <el-pagination background layout="prev, pager, next" :total="total" />
+        </el-col>
+      </el-row>
+    </div>
+  </div>
+
+  <div class="bodyPagelSL" v-else>
+    <div style="font-size: 18px; font-weight: 700; text-align: center;padding-top: 40px;padding-left: 30px; margin-bottom: 10px">安全日志查看</div>
+    <div class="tmainBody">
+      <el-table :data="tableData" style="width: 100%; margin: auto;align-items: center" :header-cell-style="{fontSize: '14px', backgroundColor: '#fff',border: 'none !important'}">
+        <el-table-column prop="date" label="时间" align="center" width="220px" />
+        <el-table-column label="巡检项目" align="center" width="600px" >
+          <el-table-column prop="contentChecking.1" label="前庭" align="center"  width="120px" :formatter="formatter1" />
+<!--          <el-table-column prop="contentChecking.1" label="前庭" align="center"  width="120px" :formatter="formatter1">-->
+<!--            <el-tag v-if="row.contentChecking.getElementById('1') =='1'">'hh'</el-tag>-->
+<!--          </el-table-column>-->
+          <el-table-column prop="contentChecking.9" label="便利店" align="center"  width="120px" />
+          <el-table-column prop="contentChecking.12" label="油罐区" align="center"  width="120px" />
+          <el-table-column prop="contentChecking.22" label="电器设备" align="center"  width="120px" />
+          <el-table-column prop="contentChecking.27" label="环保" align="center" :headerStyle="{color:'black'}" width="120px" />
+<!--     :headerStyle="{color:'black'}"xxx  某单元格的字体样式？     -->
+        </el-table-column>
+
+          <el-table-column prop="links" label="" align="center" width="200px">
+            <template #header>
+              <!--              <el-input v-model="search" size="small" placeholder="Type to search" />-->
+            </template>
+            <template #default="scope">
+
+              <!--              ！！链接-->
+              <el-link  @click="handleClick(scope.$index, scope.row)" >查看详情</el-link>
+            </template>
+
+
+          </el-table-column>
+
+
+
+
+
+      </el-table>
+      <!--    分页 -->
+      <el-row>
+        <el-col style="">
+          <el-pagination background layout="prev, pager, next" :total="total" />
         </el-col>
       </el-row>
 
@@ -191,6 +290,7 @@ function handleClick() {
 
 
   </div>
+
 </template>
 
 <style scoped>
@@ -198,11 +298,12 @@ function handleClick() {
   background-color: #f4f3f3;
   height: 100vh;
 }
-.mainBody {
-  width: 90%;
+.tmainBody {
+  width: 85%;
   background-color: #ffffff;
   justify-content: center;
-  margin: auto;
+  /*margin: auto;*/
+  margin-left: 5%;
 }
 
 .demo-date-picker {
@@ -243,9 +344,24 @@ function handleClick() {
   margin-bottom: 5px;
   margin-right: 40px;
 }
-.el-table--border th.gutter:last-of-type {
-  display: block!important;
+
+
+
+/*.el-table th.gutter{*/
+/*  display: table-cell!important;*/
+/*}*/
+.tmainBody >>> .el-table__row>td{
+  /* 去除表格线 */
+  border: none;
 }
+.tmainBody >>> .el-table tr th.is-leaf{
+  border: 1px solid #EBEEF5;
+  border-right: none;
+}
+.tmainBody >>> .el-table thead tr th:nth-last-of-type(2){
+  border-right: 1px solid #EBEEF5;
+}
+
 
 
 </style>
