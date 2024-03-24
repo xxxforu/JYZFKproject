@@ -1,222 +1,222 @@
 <!--违规行为一览_可视化统计-->
 <script setup>
- import axios from "axios";
+import axios from "axios";
 import { onMounted, ref } from 'vue';
 // import { useRoute } from 'vue-router'
 
 import * as echarts from "echarts";
- var role = localStorage.getItem('role')
- var belong = localStorage.getItem('belong')
- var isCompany = ref(true)
- var isCentral = ref(true)
+var role = localStorage.getItem('role')
+var belong = localStorage.getItem('belong')
+var isCompany = ref(true)
+var isCentral = ref(true)
 
- onMounted(()=>{
-   if(role==3){
-     isCompany.value=true
-   }else {
-     isCompany=false
-     if (role==1){
-       //总：可选分公司查看？
-       isCentral=true
-     }else {
-       //分：可选加油站查看
-       isCentral=false
-     }
-   }
+onMounted(()=>{
+  if(role==3){
+    isCompany.value=true
+  }else {
+    isCompany=false
+    if (role==1){
+      //总：可选分公司查看？
+      isCentral=true
+    }else {
+      //分：可选加油站查看
+      isCentral=false
+    }
+  }
 
- })
+})
 
 
 const radio1 = ref('1')
 
 
 //
- var flag = ref(radio1.value)
+var flag = ref(radio1.value)
 
- const clickTest = function () {
-   flag = ref(radio1.value)
+const clickTest = function () {
+  flag = ref(radio1.value)
   console.log(flag)
- }
+}
 
- // //!!
+// //!!
 // let checking=ref()
 //  let phone=ref()
 //  let work=ref()
- // let hat=ref()
+// let hat=ref()
 
- // !导出数据 ||缺少判断是哪个加油站/分公司
- const eInfo0 =ref([])
- axios.get(' http://127.0.0.1:4523/m1/3942191-0-default/petrol/exportData?startDate="2024-02-01"&endDate="2024-02-29"').then(res => {
-   eInfo0.value= res.data
-   console.log(res.data);
-   console.log('!!!')
+// !导出数据 ||缺少判断是哪个加油站/分公司
+const eInfo0 =ref([])
+axios.get(' http://127.0.0.1:4523/m1/3942191-0-default/petrol/exportData?startDate="2024-02-01"&endDate="2024-02-29"').then(res => {
+  eInfo0.value= res.data
+  console.log(res.data);
+  console.log('!!!')
 
- })
+})
 
- //!图一数据 ||缺少判断是哪个加油站/分公司
- var eInfo1 =ref([])
- 
-
-
- //!图二数据 ||传eg：type=1(/2/3/4) （某违规类型）缺传某个加油站/分公司的编号？
- const eInfo2 =ref([])
- axios.get('http://127.0.0.1:4523/m1/3942191-0-default/petrol/getPetrolIllegalBehaviorCount?type=1').then(res => {
-   eInfo2.value= res.data.data
-   console.log(res.data);
-
-   console.log(eInfo2.value)
-
-   console.log('aaa-aaa');
-   console.log(eInfo2.value.month1)
-   console.log('!!!')
- })
+//!图一数据 ||缺少判断是哪个加油站/分公司
+var eInfo1 =ref([])
 
 
 
+//!图二数据 ||传eg：type=1(/2/3/4) （某违规类型）缺传某个加油站/分公司的编号？
+const eInfo2 =ref([])
+axios.get('http://127.0.0.1:4523/m1/3942191-0-default/petrol/getPetrolIllegalBehaviorCount?type=1').then(res => {
+  eInfo2.value= res.data.data
+  console.log(res.data);
+
+  console.log(eInfo2.value)
+
+  console.log('aaa-aaa');
+  console.log(eInfo2.value.month1)
+  console.log('!!!')
+})
 
 
- // $(document).ready (function() {
- //   // DOM 加载完后，会执行这里的代码
- // } );
 
 
- const echart1=ref()
- onMounted(
-     ()=>{
+
+// $(document).ready (function() {
+//   // DOM 加载完后，会执行这里的代码
+// } );
+
+
+const echart1=ref()
+onMounted(
+    ()=>{
       axios.get('http://127.0.0.1:4523/m1/3942191-0-default/central/getPetrolIllegalBehavior?flag=1').then(res => {
-   eInfo1.value= res.data.data
-  // console.log(eInfo1.value)
-   //  checking = eInfo1.value.data.checking
-   // phone = eInfo1.value.data.phone
-   // work = eInfo1.value.data.work
-   // hat = eInfo1.value.data.hat
-   // console.log(checking)
- })
-       init1()
+        eInfo1.value= res.data.data
+        // console.log(eInfo1.value)
+        //  checking = eInfo1.value.data.checking
+        // phone = eInfo1.value.data.phone
+        // work = eInfo1.value.data.work
+        // hat = eInfo1.value.data.hat
+        // console.log(checking)
+      })
+      init1()
 
-     }
- )
- // var myChart1 = echarts.init(echart1.value);
- function init1() {
+    }
+)
+// var myChart1 = echarts.init(echart1.value);
+function init1() {
   console.log(eInfo1.value);
-   var myChart1 = echarts.init(echart1.value);
-   var option1 = {
-     title: {
-       text: '违规行为的类型分布',
-       x: 'center',
-       bottom: '50px',
-     },
-     tooltip: {
-       trigger: 'item',
-       left: 'left',
-     },
-     legend: {
-       orient: 'vertical',
-       x: 'right',
-       y: '30px',
-       textStyle: {
-         fontWeight: 700,
-       }
+  var myChart1 = echarts.init(echart1.value);
+  var option1 = {
+    title: {
+      text: '违规行为的类型分布',
+      x: 'center',
+      bottom: '50px',
+    },
+    tooltip: {
+      trigger: 'item',
+      left: 'left',
+    },
+    legend: {
+      orient: 'vertical',
+      x: 'right',
+      y: '30px',
+      textStyle: {
+        fontWeight: 700,
+      }
 
-     },
-     series: [
-       {
-         name: 'Access From',
-         type: 'pie',
-         center: ['40%','35%'],
-         radius: '50%',
-         data: [
-           {value: eInfo1.value.checking, name: '违规收费'},//=> value: checking
-           {value: eInfo1.value.phone, name: '打手机'},//=> value: phone
-           {value: eInfo1.value.work, name: '检修区不规范'},//=> value: work
-           {value: eInfo1.value.hat, name: '未戴安全帽'},//=> value: hat
-         ],
-         //.value.map(d => d.value),
-         emphasis: {
-           itemStyle: {
-             shadowBlur: 10,
-             shadowOffsetX: 0,
-             shadowColor: 'rgba(0, 0, 0, 0.5)'
-           }
-         }
-       }
-     ]
+    },
+    series: [
+      {
+        name: 'Access From',
+        type: 'pie',
+        center: ['40%','35%'],
+        radius: '50%',
+        data: [
+          {value: eInfo1.value.checking, name: '违规收费'},//=> value: checking
+          {value: eInfo1.value.phone, name: '打手机'},//=> value: phone
+          {value: eInfo1.value.work, name: '检修区不规范'},//=> value: work
+          {value: eInfo1.value.hat, name: '未戴安全帽'},//=> value: hat
+        ],
+        //.value.map(d => d.value),
+        emphasis: {
+          itemStyle: {
+            shadowBlur: 10,
+            shadowOffsetX: 0,
+            shadowColor: 'rgba(0, 0, 0, 0.5)'
+          }
+        }
+      }
+    ]
 
-   };
+  };
 
-   myChart1.setOption(option1);
- }
+  myChart1.setOption(option1);
+}
 
- // var chartDom = document.getElementById('echart1');
- // var myChart1 = echarts.init(chartDom);
- // const echart1=ref()
- // var myChart1=echarts.init(echart1.value);
- // onMounted(
- //     ()=>{
- //       init2()
- //     }
- // )
- // var option;
- // const echart1=ref()
- // onMounted(
- //     ()=>{
- //       init2()
- //     }
- // )
+// var chartDom = document.getElementById('echart1');
+// var myChart1 = echarts.init(chartDom);
+// const echart1=ref()
+// var myChart1=echarts.init(echart1.value);
+// onMounted(
+//     ()=>{
+//       init2()
+//     }
+// )
+// var option;
+// const echart1=ref()
+// onMounted(
+//     ()=>{
+//       init2()
+//     }
+// )
 
- // function fetchData(cb) {
- //   setTimeout(function (){
- //     cb({
- //       categories: ['衬衫', '羊毛衫', '雪纺衫', '裤子', '高跟鞋', '袜子'],
- //       data: [5, 20, 36, 10, 10, 20]
- //     });
- //   },1000);
- // }
- // option = {
- //   title: {
- //     text: '违规行为的类型分布',
- //     x: 'center',
- //     bottom: '50px',
- //   },
- //   tooltip: {
- //     trigger: 'item',
- //     left: 'left',
- //   },
- //   legend: {
- //     orient: 'vertical',
- //     x: 'right',
- //     y: '30px',
- //     textStyle: {
- //       fontWeight: 700,
- //     }
- //   },
- //   series: [
- //     {
- //       name: 'Access From',
- //       type: 'pie',
- //       center: ['40%','35%'],
- //       radius: '50%',
- //       data: [],
- //       // data1.value.map(d => d.value),
- //       emphasis: {
- //         itemStyle: {
- //           shadowBlur: 10,
- //           shadowOffsetX: 0,
- //           shadowColor: 'rgba(0, 0, 0, 0.5)'
- //         }
- //       }
- //     }
- //   ]
- // };
- // fetchData(function (data) {
- //   myChart1.setOption({
- //     series: {
- //       name: '销量',
- //       data: data.data
- //     }
- //   })
- // });
- // option &&myChart1.setOption(option);
+// function fetchData(cb) {
+//   setTimeout(function (){
+//     cb({
+//       categories: ['衬衫', '羊毛衫', '雪纺衫', '裤子', '高跟鞋', '袜子'],
+//       data: [5, 20, 36, 10, 10, 20]
+//     });
+//   },1000);
+// }
+// option = {
+//   title: {
+//     text: '违规行为的类型分布',
+//     x: 'center',
+//     bottom: '50px',
+//   },
+//   tooltip: {
+//     trigger: 'item',
+//     left: 'left',
+//   },
+//   legend: {
+//     orient: 'vertical',
+//     x: 'right',
+//     y: '30px',
+//     textStyle: {
+//       fontWeight: 700,
+//     }
+//   },
+//   series: [
+//     {
+//       name: 'Access From',
+//       type: 'pie',
+//       center: ['40%','35%'],
+//       radius: '50%',
+//       data: [],
+//       // data1.value.map(d => d.value),
+//       emphasis: {
+//         itemStyle: {
+//           shadowBlur: 10,
+//           shadowOffsetX: 0,
+//           shadowColor: 'rgba(0, 0, 0, 0.5)'
+//         }
+//       }
+//     }
+//   ]
+// };
+// fetchData(function (data) {
+//   myChart1.setOption({
+//     series: {
+//       name: '销量',
+//       data: data.data
+//     }
+//   })
+// });
+// option &&myChart1.setOption(option);
 
 
 //图表1
@@ -227,17 +227,17 @@ const radio1 = ref('1')
 //   {value: 79, name: '4月'},//=> value: hat
 // ])
 
- // setInterval(() =>{
- //   data1.value = data1.value.map(item =>({
- //     ...item,
- //     value: [{checking},{phone},{work},{hat}],
- //
- //   }))
- // })
- // myChart1.setOption(option1);
+// setInterval(() =>{
+//   data1.value = data1.value.map(item =>({
+//     ...item,
+//     value: [{checking},{phone},{work},{hat}],
+//
+//   }))
+// })
+// myChart1.setOption(option1);
 
 
- //var myChart1 = echarts.init(document.getElementById('echart1'));
+//var myChart1 = echarts.init(document.getElementById('echart1'));
 
 // $.get('data.json').done(function(data) {
 //
@@ -397,41 +397,41 @@ const optionb = [
 ]
 //接口
 
- // const route = useRoute()
- // // const dataList1 = ref([])
- // //
- // // const getFindInfo1 = async () => {
- // //   const res = await getFindInfo1(route.query.FindInfo1)
- // //   dataList1.value = res.result
- // //    }
- // // onMounted(() => getFindInfo1())
- // (async () => {
- //   const ins = axios.create({
- //     baseURL: 'http://localhost:8080/main'
- //   })
- //   const res1 = await ins.get('/get',{
- //     params: {
- //       name: 'zhangs',
- //       age: 18
- //     }
- //   })
- //
- // })
+// const route = useRoute()
+// // const dataList1 = ref([])
+// //
+// // const getFindInfo1 = async () => {
+// //   const res = await getFindInfo1(route.query.FindInfo1)
+// //   dataList1.value = res.result
+// //    }
+// // onMounted(() => getFindInfo1())
+// (async () => {
+//   const ins = axios.create({
+//     baseURL: 'http://localhost:8080/main'
+//   })
+//   const res1 = await ins.get('/get',{
+//     params: {
+//       name: 'zhangs',
+//       age: 18
+//     }
+//   })
+//
+// })
 
- // var msg =ref('123')
- // let eventOut = function () {
- //
- //  msg.value++
- // }
+// var msg =ref('123')
+// let eventOut = function () {
+//
+//  msg.value++
+// }
 //导出接口
 // const route = useRoute()
 
- // axios.get('http://111.230.198.4:7001/api/central/exportData?startDate=2024-02-01&endDate=2024-02-29&pidList=77101').then(res => {
- //   console.log(res.data);
- // })
- // const eventOut = (tab,event)=>{
- //  console.log(tab,event);
- // }
+// axios.get('http://111.230.198.4:7001/api/central/exportData?startDate=2024-02-01&endDate=2024-02-29&pidList=77101').then(res => {
+//   console.log(res.data);
+// })
+// const eventOut = (tab,event)=>{
+//  console.log(tab,event);
+// }
 
 //  let eventOut = function (){
 //    var axios = require('axios');
@@ -557,7 +557,7 @@ const optionb = [
 
 <style scoped>
 .bodyPagevSL {
-  background-color: #f5faf8;
+  background-color: #f4f3f3;
   height: 100vh;
   background-size:cover;
   z-index:-1;
