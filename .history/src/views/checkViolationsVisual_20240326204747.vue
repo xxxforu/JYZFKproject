@@ -1,0 +1,295 @@
+<!--违规行为一览_可视化统计-->
+<script setup>
+import axios from "axios";
+import { onMounted, ref } from 'vue';
+// import { useRoute } from 'vue-router'
+
+import * as echarts from "echarts";
+var role = localStorage.getItem("role")==1?"central":localStorage.getItem("role")==2?"branch":"petrol";
+var belong = localStorage.getItem('belong')
+var status = ref('central')
+
+
+const radio1 = ref('当天')
+var flag = ref(1)
+
+onMounted(()=>{
+  init1()
+})
+const clickTest = function () {
+  if(radio1.value == "当天") flag.value= 1
+  else flag.value=0
+
+  init1()
+  init2()
+}
+const changeRadio = function(){
+  console.log(valueb.value);
+}
+
+
+
+
+//图表1
+const echart1=ref()
+function init1() {
+  var eInfo0 = {}
+  axios.get('/'+role+'/getPetrolIllegalBehavior?flag='+flag.value).then(res => {
+  eInfo0={...res.data.data}
+  console.log(eInfo0);
+
+  var myChart1 = echarts.init(echart1.value);
+  var option1 = {
+    title: {
+      text: '违规行为的类型分布',
+      x: 'center',
+      bottom: '50px',
+    },
+    tooltip: {
+      trigger: 'item',
+      left: 'left',
+    },
+    legend: {
+      orient: 'vertical',
+      x: 'right',
+      y: '30px',
+      textStyle: {
+        fontWeight: 700,
+      }
+
+    },
+    series: [
+      {
+        name: 'Access From',
+        type: 'pie',
+        center: ['40%','35%'],
+        radius: '50%',
+        data: [
+          {value: eInfo0.checking, name: '未正确摆放护栏'},
+          {value: eInfo0.existPerson, name: '卸油区有人'},
+          {value: eInfo0.fire, name: '发生火灾'},
+          {value: eInfo0.hat, name: '检修区未戴安全帽'},
+          {value: eInfo0.phone, name: '打电话'},
+        ],
+        //.value.map(d => d.value),
+        emphasis: {
+          itemStyle: {
+            shadowBlur: 10,
+            shadowOffsetX: 0,
+            shadowColor: 'rgba(0, 0, 0, 0.5)'
+          }
+        }
+      }
+    ]
+
+  };
+
+  myChart1.setOption(option1);
+})
+  
+}
+
+//图表2
+const data2 = ref([
+  {value: 170, month: '1月'},
+  {value: 100, month: '2月'},
+  {value: 220, month: '3月'},
+  {value: 250, month: '4月'},
+])
+
+const echart2=ref()
+function init2(){
+  axios.get('/'+role.value+'/getPetrolIllegalBehaviorCount?type=')
+
+  var myChart2=echarts.init(echart2.value);
+  var option2={
+    title: {
+      text: '违规类型次数统计',
+      x: 'center',
+      // y: 'bottom',
+      bottom: '50px'
+    },
+    grid: {
+      top: 30,
+      bottom: 120,
+      left: 30,
+      x: 45,
+      x2: 30,
+      y2: 80,
+    },
+    tooltip: {},
+    xAxis: {
+      type: 'category',
+      data: data2.value.map(d => d.month)
+    },
+    yAxis: {
+      type: 'value',
+    },
+    series: [
+      {
+        data: data2.value.map(d =>d.value),
+        type: 'line',
+
+      }
+    ]
+
+  };
+
+  myChart2.setOption(option2);
+
+}
+
+const valuea = ref('所有加油站')
+const optiona = [
+  {
+    value: 'All',
+    label: '所有加油站',
+  },
+  {
+    value: 'Option2',
+    label: '(分公司xx / )加油站1',
+  },
+  {
+    value: 'Option3',
+    label: '加油站2',
+  },
+  {
+    value: 'Option4',
+    label: '加油站3',
+  },
+  {
+    value: 'Option5',
+    label: '加油站4',
+  },
+]
+
+const valueb = ref('违规收费')
+const optionb = [
+  {
+    value: 'All',
+    label: '违规收费',
+  },
+  {
+    value: 'Option2',
+    label: '未戴安全帽',
+  },
+  {
+    value: 'Option3',
+    label: '打手机',
+  },
+  {
+    value: 'Option4',
+    label: '检修区不规范',
+  },
+]
+
+</script>
+
+<template>
+  <!--  <div>可视化设计8899</div>-->
+  <!--  <div>-->
+  <!--    <e-charts class="chart" :option="option" />-->
+  <!--  </div>-->
+  <div class="bodyPagevSL">
+    <!-- <div>
+      <div style="width: 500px; height:100px; float: left;"></div>
+      <div style="width: 35%; height:100px; float: right;">
+        <div style="color:#999999; text-align: left; font-size: 12px; padding-left: 6px; margin-top: 6px">查看方式</div>
+
+        <div style="text-align: left; padding-left: 20px; margin-top: 5px; margin-bottom: 20px">
+          <el-select
+              v-model="valuea"
+              class="m-2"
+              placeholder="所有加油站"
+              size="large"
+              style="width: 240px"
+          >
+            <el-option
+                v-for="item in optiona"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+            />
+          </el-select>
+          <el-button type="primary" style="margin-left: 30px" @click="eventOut">一键导出</el-button>
+
+        </div>
+      </div>
+    </div> -->
+    <br/>
+
+
+    <div>
+
+
+      <div class="box">
+        <div style="float: right ; margin-right: 20px; margin-top: 10px">
+          <el-radio-group v-model="radio1" @change="clickTest" >
+            <el-radio-button label="当天"></el-radio-button>
+            <el-radio-button label="近七天"></el-radio-button>
+          </el-radio-group>
+        </div>
+
+
+        <div class="chart" ref="echart1" style="margin-right: 20px; float: left"></div>
+
+      </div>
+      <div class="box" style="height: 400px; width: 25px; opacity: 0"></div>
+      <div class="box">
+        <div style="float: left; margin-left: 20px; margin-top: 10px; color: #ffde59;">
+          <el-select
+              v-model="valueb"
+              class="m-2"
+              placeholder=""
+              size=""
+              style="width: 150px"
+              @change="changeRadio"
+          >
+            <el-option
+                v-for="item in optionb"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+            />
+          </el-select>
+        </div>
+
+
+        <div class="chart" ref="echart2" style="float: left; margin-left: 30px;"></div>
+      </div>
+
+    </div>
+
+
+  </div>
+
+
+
+</template>
+
+
+
+<style scoped>
+.bodyPagevSL {
+  background-color: #f4f3f3;
+  height: 100vh;
+  background-size:cover;
+  z-index:-1;
+}
+.chart {
+  height: 400px;
+  /*!*background-color: #ffffff;*!*/
+  width: 90%;
+  /*margin-top: 50px;*/
+  display: inline-block;
+  /*padding-right: -20px;*/
+}
+.box {
+  height: 400px;
+  width: 47%;
+  background-color: #ffffff;
+  display: inline-block;
+  margin-left: 5px;
+
+}
+</style>
