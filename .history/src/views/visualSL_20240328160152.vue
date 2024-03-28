@@ -234,28 +234,19 @@ function init2() {
   var requesrURL = localStorage.getItem('role')==3?'/petrol/getPetrolOneItemContentException':'/branch/getOneItemContentException'
   axios.get(requesrURL+'?item='+select.value+'&flag='+flag2.value).then(res=>{
     var requestData =  res.data.data
-    var selected = ""
-    switch (select.value){
-      case '前庭':
-        selected='vestibule'
-        break;
-      case '便利店':
-        selected='store'
-        break;
-      case '油罐区':
-        selected='bankFarm'
-        break;
-      case '电器设备':
-        selected='electric'
-        break;
-      case '环保':
-        selected='environment'
-        break;
-    }
-    var currentItems = SLData.value[selected]
+    var currentItems = SLData.value['select.value']
     console.log(currentItems)
     var data = []
-    var option2 = {
+    for(let i in requestData){
+      // console.log(i);
+      for(let j in currentItems){
+        console.log(j);
+        if(i==j.num) console.log(j.checkContent);
+      }
+    }
+  })
+  var myChart2 = echarts.init(echart2.value);
+  var option2 = {
     tooltip: {
       trigger: 'item',
       left: 'left'
@@ -275,6 +266,10 @@ function init2() {
         center: ['75%','40%'],
         radius: '50%',
         data: [
+          { value: 735, name: '前庭(/xx)内容1' },
+          { value: 580, name: '前庭(/xx)内容2' },
+          { value: 484, name: '前庭(/xx)内容3' },
+          { value: 300, name: '前庭(/xx)内容4' }
         ],
         emphasis: {
           itemStyle: {
@@ -287,22 +282,8 @@ function init2() {
     ]
 
   };
-    for(let i in requestData){
-      for(let j in currentItems){
-        console.log(currentItems[j].num);
-        if(i==currentItems[j].num) {
-          option2.series[0].data.push({value:requestData[i],name:currentItems[j].checkContent})
-        }
-
-      }
-    }
-
-    var myChart2 = echarts.init(echart2.value);
-  
 
   myChart2.setOption(option2);
-  })
-  
 }
 function changeChart2(){
   select1.value = optionb[select.value][0].label

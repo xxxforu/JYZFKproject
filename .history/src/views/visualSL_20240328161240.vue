@@ -291,7 +291,7 @@ function init2() {
       for(let j in currentItems){
         console.log(currentItems[j].num);
         if(i==currentItems[j].num) {
-          option2.series[0].data.push({value:requestData[i],name:currentItems[j].checkContent})
+          option2.series.data.push({value:requestData[i],name:currentItems[j].checkContent})
         }
 
       }
