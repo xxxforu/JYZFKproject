@@ -9,6 +9,7 @@ var isCompany = ref(true)
 var lastPage = ref(0)
 var total = ref(0)
 var page=ref(1)
+var time=ref();
 
 
 
@@ -89,6 +90,16 @@ const router = useRouter()
 //     path:'/main/visualSL'
 //   })
 // }
+
+// function renderTime(date) {
+//   var datee=new Date(date).toJSON();
+//   return new Date(+new Date(datee)+8*3600*1000).toISOString().replace(/T/g,'').replace(/\.[\d]{3})
+// }
+function renderTime(date) {
+  var dateee = new Date(date).toJSON();
+  return new Date(+new Date(dateee) + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '')
+}
+
 function handleClick(index,row) {
   // console.log(index,row);
   router.push({
@@ -110,6 +121,11 @@ function pList(){
     tableData.value = res.data.data.data
     lastPage.value=res.data.data.lastPage
     total.value=res.data.data.total
+    for(let i=0;i<total.value;i++){
+      time.value=ref(renderTime(tableData.value[i].time))
+      time.value=time.value.value
+      tableData.value[i].time=time.value
+    }
     console.log(total.value)
     console.log(page.value)
   }).catch(error=>{
@@ -121,7 +137,14 @@ function cList1(){
     tableData.value = res.data.data.data
     lastPage.value=res.data.data.lastPage
     total.value=res.data.data.total
+    for(let i=0;i<total.value;i++){
+      time.value=ref(renderTime(tableData.value[i].time))
+      time.value=time.value.value
+      tableData.value[i].time=time.value
+    }
     console.log(total.value)
+    console.log(time.value)
+    console.log(tableData.value[0].time)
   }).catch(error=>{
     console.log('Error',error.message)
   })
@@ -131,9 +154,11 @@ function  cList2(){
     tableData.value = res.data.data.data
     lastPage.value=res.data.data.lastPage
     total.value=res.data.data.total
-    console.log("qwerty")
-    console.log(tableData.value)
-    console.log("qwerty")
+    for(let i=0;i<total.value;i++){
+      time.value=ref(renderTime(tableData.value[i].time))
+      time.value=time.value.value
+      tableData.value[i].time=time.value
+    }
     console.log(tableData.value)
     console.log(tableData.value.pid)
     console.log(res.data.data)
@@ -142,6 +167,9 @@ function  cList2(){
     console.log('Error',error.message)
   })
 }
+
+
+
 
 onMounted(()=>{
   if(role==1){
@@ -209,8 +237,8 @@ function handlePageChange(currentPage)
 
     <div class="t_background">
       <div class="tmainBody">
-        <el-table stripe :data="tableData" empty-text="暂无违规信息" :header-cell-style="{'text-align':'center'}" style="width: 100%">
-          <el-table-column prop="date" label="时间" align="center" />
+        <el-table :data="tableData" empty-text="暂无违规信息" :header-cell-style="{'text-align':'center'}" style="width: 100%">
+          <el-table-column prop="time" label="时间" align="center" />
           <el-table-column prop="pid" label="加油站" align="center" />
           <el-table-column prop="petrolName" label="加油站名称" align="center" />
           <el-table-column prop="illegalType" label="类型" align="center" :formatter="formatter"/>
@@ -266,8 +294,8 @@ function handlePageChange(currentPage)
     <div  class="t_background">
       <div class="tmainBody">
         <el-table :data="tableData" empty-text="暂无违规信息" :header-cell-style="{'text-align':'center'}" style="width: 100%">
-          <el-table-column prop="date" label="时间" align="center" />
-<!--          <el-table-column prop="petrolName" label="加油站名称" align="center" />-->
+          <el-table-column prop="time" label="时间" align="center" />
+          <!--          <el-table-column prop="petrolName" label="加油站名称" align="center" />-->
           <el-table-column prop="illegalType" label="类型" align="center" :formatter="formatter"/>
           <el-table-column prop="links" label="" align="center" >
             <template #header>
@@ -301,22 +329,23 @@ function handlePageChange(currentPage)
 .t_background {
   width: 90%;
   background-color: #ffffff;
-  margin:50px  auto 0;
+  margin-left: 5%;
 }
 .tmainBody {
   width: 80%;
   margin-top: 5%;
-  margin: auto;
+  margin-left: 5%;
+  /*justify-content: center;*/
+  /*margin: auto;*/
 }
 .tmainBody >>> .el-table__row>td{
   /* 去除表格线 */
   border: none;
 }
-.el-row{
-  width: fit-content;
-  margin:10px auto;
-
-}
+/*.tmainBody >>> .el-table th.is-leaf {*/
+/*  !* 去除上边框 *!*/
+/*  border: none;*/
+/*}*/
 
 
 </style>
