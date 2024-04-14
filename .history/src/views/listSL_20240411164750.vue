@@ -41,10 +41,7 @@ const handleChangePage = (value)=>{
         oneData.checkCount.electric = i['22']+i['23']+i['24']+i['25']+i['26']
         oneData.checkCount.environment = i['27']+i['28']
         oneData.pid =  res.data.data.data[item].pid
-        oneData.itemDescribe =res.data.data.data[item].itemDescribe
-        for(let des in oneData.itemDescribe){
-          if(oneData.itemDescribe[des] == "")oneData.itemDescribe[des] ="无"
-        }
+        oneData.itemDescribe =  res.data.data.data[item].itemDescribe
         oneData.date= res.data.data.data[item].date
         tableData.value.push(oneData)
 
@@ -78,10 +75,7 @@ if(role==2){
         oneData.checkCount.electric = i['22']+i['23']+i['24']+i['25']+i['26']
         oneData.checkCount.environment = i['27']+i['28']
         oneData.pid =  res.data.data[item].pid
-        oneData.itemDescribe =res.data.data.data[item].itemDescribe
-        for(let des in oneData.itemDescribe){
-          if(oneData.itemDescribe[des] == "")oneData.itemDescribe[des] ="无"
-        }
+        oneData.itemDescribe =  res.data.data[item].itemDescribe
 
         tableData.value.push(oneData)
 
@@ -112,10 +106,7 @@ else if(role==3){
         oneData.checkCount.electric =5- i['22']-i['23']-i['24']-i['25']-i['26']
         oneData.checkCount.environment =2- i['27']-i['28']
         oneData.pid =  res.data.data.data[item].pid
-        oneData.itemDescribe =res.data.data.data[item].itemDescribe
-        for(let des in oneData.itemDescribe){
-          if(oneData.itemDescribe[des] == "")oneData.itemDescribe[des] ="无"
-        }
+        oneData.itemDescribe =  res.data.data.data[item].itemDescribe
         oneData.date= res.data.data.data[item].date
         tableData.value.push(oneData)
 
@@ -124,12 +115,12 @@ else if(role==3){
 
   })
 }
-console.log(tableData.value);
+
 }
 onMounted(()=>{
   getSafeList()
   
-
+console.log(tableData.value);
 })
 
 

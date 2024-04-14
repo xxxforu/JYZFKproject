@@ -145,7 +145,7 @@ const role = localStorage.getItem("role")
           localStorage.removeItem("role")
           localStorage.removeItem("belong")
           sessionStorage.clear()
-          sessionStorage.removeItem("isAppeal")
+          sessionStorage.removeItem('pid')
           this.$router.push('/')
           //此组件自带的提示样式
           this.$message({

@@ -281,8 +281,6 @@ onMounted(()=>{
   float: left;
   margin-left: 50px;
   margin-top:50px;
-  display: block;
-  cursor: pointer;
   color: var(--el-color-primary);
 }
 #VDpage{

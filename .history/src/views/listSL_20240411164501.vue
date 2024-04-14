@@ -35,16 +35,14 @@ const handleChangePage = (value)=>{
           }
         };
         var i = res.data.data.data[item].contentChecking
+        console.log(i);
         oneData.checkCount.vestibule = i['1']+i['2']+i['3']+i['4']+i['5']+i['6']+i['7']+i['8']
         oneData.checkCount.store = i['9']+i['10']+i['11']
         oneData.checkCount.tankFarm = i['12']+i['13']+i['14']+i['15']+i['16']+i['17']+i['18']+i['19']+i['20']+i['21']
         oneData.checkCount.electric = i['22']+i['23']+i['24']+i['25']+i['26']
         oneData.checkCount.environment = i['27']+i['28']
         oneData.pid =  res.data.data.data[item].pid
-        oneData.itemDescribe =res.data.data.data[item].itemDescribe
-        for(let des in oneData.itemDescribe){
-          if(oneData.itemDescribe[des] == "")oneData.itemDescribe[des] ="无"
-        }
+        oneData.itemDescribe =  res.data.data.data[item].itemDescribe
         oneData.date= res.data.data.data[item].date
         tableData.value.push(oneData)
 
@@ -58,7 +56,7 @@ const handleChangePage = (value)=>{
 function getSafeList(){
 if(role==2){
   axios.get('/branch/getSafeDailyList?companyId='+belong+'&date='+dateValue.value).then(res=>{
-    
+    console.log(res);
     if(res.data.data){
       tableData.value = [] //更新前先清空之前的
       for(let item in res.data.data){
@@ -78,10 +76,7 @@ if(role==2){
         oneData.checkCount.electric = i['22']+i['23']+i['24']+i['25']+i['26']
         oneData.checkCount.environment = i['27']+i['28']
         oneData.pid =  res.data.data[item].pid
-        oneData.itemDescribe =res.data.data.data[item].itemDescribe
-        for(let des in oneData.itemDescribe){
-          if(oneData.itemDescribe[des] == "")oneData.itemDescribe[des] ="无"
-        }
+        oneData.itemDescribe =  res.data.data[item].itemDescribe
 
         tableData.value.push(oneData)
 
@@ -106,16 +101,14 @@ else if(role==3){
           }
         };
         var i = res.data.data.data[item].contentChecking
+        console.log(i);
         oneData.checkCount.vestibule =8-( i['1']+i['2']+i['3']+i['4']+i['5']+i['6']+i['7']+i['8'])
         oneData.checkCount.store =3-( i['9']+i['10']+i['11'])
         oneData.checkCount.tankFarm =10- i['12']-i['13']-i['14']-i['15']-i['16']-i['17']-i['18']-i['19']-i['20']-i['21']
         oneData.checkCount.electric =5- i['22']-i['23']-i['24']-i['25']-i['26']
         oneData.checkCount.environment =2- i['27']-i['28']
         oneData.pid =  res.data.data.data[item].pid
-        oneData.itemDescribe =res.data.data.data[item].itemDescribe
-        for(let des in oneData.itemDescribe){
-          if(oneData.itemDescribe[des] == "")oneData.itemDescribe[des] ="无"
-        }
+        oneData.itemDescribe =  res.data.data.data[item].itemDescribe
         oneData.date= res.data.data.data[item].date
         tableData.value.push(oneData)
 
@@ -124,12 +117,11 @@ else if(role==3){
 
   })
 }
-console.log(tableData.value);
+
 }
 onMounted(()=>{
   getSafeList()
-  
-
+console.log(tableData.value);
 })
 
 
@@ -138,6 +130,7 @@ const value1 = ref('')
 function handlePageChange(currentPage)
 {
   page=currentPage
+  console.log(currentPage)
 
 }
 function handleDateChange(){

@@ -236,7 +236,7 @@ function handlePageChange(currentPage)
           <el-table-column prop="time" label="时间" align="center" />
           <el-table-column prop="pid" label="加油站" align="center" />
           <el-table-column prop="petrolName" label="加油站名称" align="center" />
-          <el-table-column prop="description" label="描述" align="center"/>
+          <el-table-column prop="description" label="类型" align="center"/>
           <el-table-column prop="links" label="" align="center" >
             <template #header>
               <!--              <el-input v-model="search" size="small" placeholder="Type to search" />-->

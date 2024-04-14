@@ -172,7 +172,7 @@ onMounted(()=>{
 
 <template>
   <div id="VDpage">
-    <span id="returnPage" @click="returnPage">&lt;&lt;返回</span>
+    <span @click="returnPage">&lt;&lt;返回</span>
     <h1 id="title">违规行为详情</h1>
     <div class="topDetail">
       <p v-if="isAppeal">申诉时间：{{appealDate}}</p>
@@ -276,15 +276,6 @@ onMounted(()=>{
 
 
 <style scoped>
-#returnPage{
-  font-size: 18px;
-  float: left;
-  margin-left: 50px;
-  margin-top:50px;
-  display: block;
-  cursor: pointer;
-  color: var(--el-color-primary);
-}
 #VDpage{
   overflow-y: scroll;
   height: 100vh;

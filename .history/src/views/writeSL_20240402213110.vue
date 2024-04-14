@@ -286,7 +286,6 @@ const toAnnounceBulletin =function(){
   }
 }
 //再弹出提示框
-activeName.value = 'vestibule'
       ElMessage({
     message: '今日已完成安全巡检填报！',
     type: 'success',
