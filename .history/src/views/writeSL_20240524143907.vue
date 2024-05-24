@@ -3,6 +3,7 @@
 import axios from 'axios';
 import { ElMessage } from 'element-plus';
 import { onMounted, ref } from 'vue';
+console.log(a)
 var role = localStorage.getItem('role')
 var activeName = ref('vestibule') //当前tab
 var year = ref(); // 获取年份

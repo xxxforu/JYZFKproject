@@ -277,7 +277,7 @@ function init2() {
       {
         name: '暂无数据',
         type: 'pie',
-        center: ['65%','40%'],
+        center: ['75%','40%'],
         radius: '50%',
         data: [
         ],
@@ -411,7 +411,6 @@ function init4(){
     },
     series: [
       {
-        name:'暂无数据',
         data: [],
         type: 'line',
 

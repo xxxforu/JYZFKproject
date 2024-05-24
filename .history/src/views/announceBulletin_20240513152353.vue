@@ -143,10 +143,6 @@ axios(config)
   })}
 })
 .catch(function (error) {
-  ElMessage({
-    message: '发布失败！',
-    type: 'error',
-  })
    loading.value=false
 });
 

@@ -248,7 +248,7 @@ function init2() {
         selected='store'
         break;
       case '油罐区':
-        selected='tankFarm'
+        selected='bankFarm'
         break;
       case '电器设备':
         selected='electric'
@@ -268,7 +268,7 @@ function init2() {
     legend: {
       orient: 'vertical',
       x: '10%',
-      y: '5%',
+      y: '10%',
       textStyle: {
         fontWeight: 700,
       }
@@ -277,7 +277,7 @@ function init2() {
       {
         name: '暂无数据',
         type: 'pie',
-        center: ['65%','40%'],
+        center: ['75%','40%'],
         radius: '50%',
         data: [
         ],
@@ -354,7 +354,6 @@ function init3(){
     },
     series: [
       {
-        name:'暂无数据',
         data: [],
         type: 'line',
 
@@ -385,7 +384,7 @@ onMounted(
 function init4(){
   var requesrURL = localStorage.getItem('role')==3?'/petrol/getPetrolOneContentException':'/branch/getOneContentException'
   axios.get(requesrURL+'?content='+select1.value).then(res=>{
-    console.log(res.data.data.length == 0);
+    console.log(typeof(res.data.data));
     if(res.data.data ){
 
   var myChart4=echarts.init(echart4.value);
@@ -411,7 +410,6 @@ function init4(){
     },
     series: [
       {
-        name:'暂无数据',
         data: [],
         type: 'line',
 
